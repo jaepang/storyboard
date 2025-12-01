@@ -1,50 +1,125 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version: 초기 버전 → 1.0.0
+- 변경된 원칙: 전체 새로 작성
+- 추가된 섹션: 핵심 원칙 (5개), 개발 워크플로우, 거버넌스
+- 제거된 섹션: 없음
+- 템플릿 업데이트 상태:
+  ✅ plan-template.md - Constitution Check 섹션 확인 완료
+  ✅ spec-template.md - 요구사항 정의 섹션과 일관성 확인 완료
+  ✅ tasks-template.md - 태스크 구성 원칙과 일관성 확인 완료
+  ⚠ CLAUDE.md - 새로 생성 필요
+- 후속 작업: CLAUDE.md 파일 생성하여 한국어 작성 가이드 추가
+-->
 
-## Core Principles
+# Storyboard 프로젝트 Constitution
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## 핵심 원칙
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### I. 코드 퀄리티 최우선
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**원칙**: 모든 구현은 코드 퀄리티를 최우선으로 고려해야 한다.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+- 가독성과 유지보수성을 고려한 명확한 코드 작성
+- 일관된 코딩 스타일과 네이밍 컨벤션 준수
+- 불필요한 복잡성 제거 및 KISS(Keep It Simple, Stupid) 원칙 적용
+- 코드 리뷰를 통한 품질 검증 필수
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+**근거**: 개인 프로젝트라도 장기적으로 유지보수 가능한 코드베이스를 구축하기 위해 처음부터 높은 코드 퀄리티를 유지해야 한다.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### II. 한국어 우선 문서화
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+**원칙**: 모든 문서 및 LLM 생성 답변은 무조건 한국어로 작성되어야 한다.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- 프로젝트 문서(README, 스펙, 플랜, 태스크 등) 한국어 작성
+- LLM 에이전트 응답 및 생성 콘텐츠 한국어 작성
+- 코드 주석 및 문서화 문자열 한국어 작성 권장
+- 예외: 코드 자체(함수명, 변수명 등)는 영어 사용 가능
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**근거**: 한국어 사용자를 위한 프로젝트로서 모든 문서와 커뮤니케이션을 한국어로 통일하여 이해도와 생산성을 극대화한다.
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+### III. 실용주의적 개발
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+**원칙**: 개인 사용 목적의 프로젝트로서 과도한 추상화보다는 기능 구현을 우선한다.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- 현재 필요한 기능에 집중하여 구현 (YAGNI - You Aren't Gonna Need It)
+- 확장 가능성보다는 현재 요구사항 충족을 우선시
+- 필요 시점에 리팩토링하는 접근 (premature optimization 지양)
+- 단, 코드 퀄리티는 유지 (원칙 I과 균형 유지)
+
+**근거**: 개인 프로젝트의 특성상 빠른 기능 구현과 검증이 중요하며, 과도한 설계는 개발 속도를 저하시킬 수 있다.
+
+### IV. 테스트 기반 개발 (선택적)
+
+**원칙**: 테스트는 복잡도와 중요도에 따라 선택적으로 작성한다.
+
+- 핵심 비즈니스 로직: 테스트 필수
+- 단순 CRUD 작업: 테스트 선택적
+- 외부 통합 지점: 통합 테스트 권장
+- 테스트 작성 시 의미 있는 테스트 케이스에 집중
+
+**근거**: 개인 프로젝트에서 모든 코드에 테스트를 작성하는 것은 비효율적일 수 있으나, 핵심 로직의 안정성은 보장해야 한다.
+
+### V. 문서화 및 추적성
+
+**원칙**: 구현 과정과 결정 사항을 체계적으로 문서화한다.
+
+- 기능별 스펙 문서 작성 (spec.md)
+- 구현 계획 문서화 (plan.md)
+- 태스크 단위 추적 (tasks.md)
+- 주요 기술적 결정 사항 기록
+
+**근거**: 시간이 지나도 프로젝트의 맥락과 의도를 이해할 수 있도록 하며, 향후 유지보수와 확장 시 참고 자료로 활용한다.
+
+## 개발 워크플로우
+
+### 기능 개발 프로세스
+
+1. **요구사항 정의**: `/speckit.specify`로 기능 스펙 작성
+2. **구현 계획**: `/speckit.plan`으로 기술적 접근 방식 수립
+3. **태스크 분해**: `/speckit.tasks`로 실행 가능한 태스크 생성
+4. **구현 실행**: `/speckit.implement`로 태스크 단위 구현
+5. **검증 및 리뷰**: 구현된 기능 확인 및 코드 퀄리티 검토
+
+### 코드 리뷰 기준
+
+- 코드 가독성 및 명확성
+- 네이밍 컨벤션 준수
+- 불필요한 복잡성 여부
+- 주석 및 문서화 적절성
+- 핵심 로직의 테스트 커버리지 (필요 시)
+
+### 커밋 관리
+
+- 의미 있는 단위로 커밋
+- 명확한 커밋 메시지 작성 (한국어 권장)
+- 기능별 브랜치 사용 권장
+
+## 거버넌스
+
+### Constitution 준수
+
+본 Constitution은 프로젝트의 모든 개발 활동에 우선하는 최상위 원칙이다:
+
+- 모든 PR 및 코드 리뷰는 Constitution 준수 여부를 확인해야 함
+- Constitution 위반 시 정당한 사유를 문서화해야 함 (plan.md의 Complexity Tracking 섹션)
+- 불필요한 복잡성 도입은 거부되어야 함
+
+### 개정 절차
+
+Constitution 개정 시 다음 절차를 따른다:
+
+1. 개정 사유 및 내용 문서화
+2. 영향받는 템플릿 및 문서 파악
+3. 버전 번호 결정 (Semantic Versioning)
+   - MAJOR: 기존 원칙 제거 또는 근본적 재정의
+   - MINOR: 새로운 원칙 추가 또는 주요 확장
+   - PATCH: 명확화, 표현 수정, 오타 수정
+4. 관련 파일 업데이트 및 동기화
+5. Sync Impact Report 작성
+
+### 런타임 개발 가이드
+
+LLM 에이전트(Claude 등)가 개발 작업을 수행할 때는 `CLAUDE.md`를 참고하여 한국어 작성 지침 및 프로젝트별 컨벤션을 따라야 한다.
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-01 | **Last Amended**: 2025-12-01

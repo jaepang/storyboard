@@ -31,7 +31,29 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+다음 항목들이 `.specify/memory/constitution.md`의 원칙을 준수하는지 확인:
+
+### ✅ 코드 퀄리티 최우선
+- [ ] 코드 가독성 및 유지보수성을 고려한 설계
+- [ ] 일관된 코딩 스타일 및 네이밍 컨벤션 계획
+- [ ] 불필요한 복잡성 제거 (KISS 원칙)
+
+### ✅ 한국어 우선 문서화
+- [ ] 모든 문서를 한국어로 작성 (spec.md, plan.md, tasks.md 등)
+- [ ] 코드 주석 및 docstring 한국어 작성 계획
+
+### ✅ 실용주의적 개발
+- [ ] 현재 필요한 기능에 집중 (YAGNI)
+- [ ] 과도한 추상화 회피
+- [ ] 복잡성 도입 시 정당한 사유 문서화 (Complexity Tracking 섹션)
+
+### ✅ 테스트 기반 개발 (선택적)
+- [ ] 핵심 비즈니스 로직 테스트 계획 수립
+- [ ] 통합 지점 테스트 전략 수립 (필요시)
+
+### ✅ 문서화 및 추적성
+- [ ] 주요 기술적 결정사항 문서화
+- [ ] 구현 과정 추적 가능하도록 계획
 
 ## Project Structure
 

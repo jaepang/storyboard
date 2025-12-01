@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch --all --prune)",
+      "Bash(bash .specify/scripts/bash/create-new-feature.sh --json --number 1 --short-name \"worship-storyboard\" \"교회 찬양 인도자 / 반주자 콘티(Storyboard) 작성 및 조회 프로그램\")",
+      "Bash(bash .specify/scripts/bash/check-prerequisites.sh --json --paths-only)",
+      "Bash(bash .specify/scripts/bash/setup-plan.sh --json)",
+      "Bash(bash /Users/jaepang/code/storyboard/.specify/scripts/bash/update-agent-context.sh)",
+      "Bash(bash .specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
+      "Bash(git rev-parse --git-dir)",
+      "Bash(awk '{print $NF}')",
+      "Bash(pnpm init)",
+      "Bash(pnpm add next@15 react@19 react-dom@19)",
+      "Bash(pnpm add typescript @types/react @types/react-dom @types/node -D)",
+      "Bash(pnpm add @supabase/ssr @supabase/supabase-js pdf-lib react-pdf @biomejs/biome vitest @testing-library/react @testing-library/jest-dom jsdom -D)",
+      "Bash(git add -A)",
+      "Bash(git commit -m \"feat: Phase 1 Setup 완료 (T001-T008)\n\n- Next.js 15 + React 19 + TypeScript 프로젝트 초기화\n- Supabase, PDF-lib, Vitest, Biome 등 필수 의존성 설치\n- TypeScript, Biome, Vitest, Next.js 설정 파일 생성\n- 환경 변수 예시 파일 (.env.example) 생성\n- 프로젝트 디렉토리 구조 생성 (src/app, components, lib, types, tests)\n- package.json 스크립트 추가 (dev, build, lint, format, test)\n- .gitignore 파일 생성\n- tests/setup.ts 생성 (Vitest + React Testing Library)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
