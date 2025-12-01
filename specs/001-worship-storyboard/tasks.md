@@ -58,30 +58,30 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### TypeScript 타입 정의
 
-- [ ] T019 [P] Database 타입 정의 생성 (src/types/database.ts) - Supabase 스키마 기반
-- [ ] T020 [P] Conti 타입 정의 생성 (src/types/conti.ts)
-- [ ] T021 [P] Song 타입 정의 생성 (src/types/song.ts)
-- [ ] T022 [P] API 요청/응답 타입 정의 생성 (src/types/api.ts)
-- [ ] T023 [P] Annotation 타입 정의 생성 (src/types/annotation.ts)
+- [X] T019 [P] Database 타입 정의 생성 (src/types/database.ts) - Supabase 스키마 기반
+- [X] T020 [P] Conti 타입 정의 생성 (src/types/conti.ts)
+- [X] T021 [P] Song 타입 정의 생성 (src/types/song.ts)
+- [X] T022 [P] API 요청/응답 타입 정의 생성 (src/types/api.ts)
+- [X] T023 [P] Annotation 타입 정의 생성 (src/types/annotation.ts)
 
 ### Supabase 클라이언트 설정
 
-- [ ] T024 [P] 서버 컴포넌트용 Supabase 클라이언트 생성 (src/lib/supabase/server.ts)
-- [ ] T025 [P] 클라이언트 컴포넌트용 Supabase 클라이언트 생성 (src/lib/supabase/client.ts)
+- [X] T024 [P] 서버 컴포넌트용 Supabase 클라이언트 생성 (src/lib/supabase/server.ts)
+- [X] T025 [P] 클라이언트 컴포넌트용 Supabase 클라이언트 생성 (src/lib/supabase/client.ts)
 
 ### 공통 유틸리티
 
-- [ ] T026 [P] 에러 핸들링 유틸리티 생성 (src/lib/utils/error.ts) - API 에러 응답 포맷
-- [ ] T027 [P] 유효성 검증 유틸리티 생성 (src/lib/utils/validation.ts) - 입력 검증 헬퍼
-- [ ] T028 [P] BPM 배열 포맷 유틸리티 생성 (src/lib/utils/format.ts) - "120 → 140 → 100" 포맷
+- [X] T026 [P] 에러 핸들링 유틸리티 생성 (src/lib/utils/error.ts) - API 에러 응답 포맷
+- [X] T027 [P] 유효성 검증 유틸리티 생성 (src/lib/utils/validation.ts) - 입력 검증 헬퍼
+- [X] T028 [P] BPM 배열 포맷 유틸리티 생성 (src/lib/utils/format.ts) - "120 → 140 → 100" 포맷
 
 ### 레이아웃 및 공통 컴포넌트
 
-- [ ] T029 Root Layout 생성 (src/app/layout.tsx) - 기본 HTML 구조, 메타데이터
-- [ ] T030 [P] 공통 Button 컴포넌트 생성 (src/components/common/Button.tsx)
-- [ ] T031 [P] 공통 Input 컴포넌트 생성 (src/components/common/Input.tsx)
-- [ ] T032 [P] 공통 Loading 컴포넌트 생성 (src/components/common/Loading.tsx)
-- [ ] T033 [P] 공통 ErrorMessage 컴포넌트 생성 (src/components/common/ErrorMessage.tsx)
+- [X] T029 Root Layout 생성 (src/app/layout.tsx) - 기본 HTML 구조, 메타데이터
+- [X] T030 [P] 공통 Button 컴포넌트 생성 (src/components/common/Button.tsx)
+- [X] T031 [P] 공통 Input 컴포넌트 생성 (src/components/common/Input.tsx)
+- [X] T032 [P] 공통 Loading 컴포넌트 생성 (src/components/common/Loading.tsx)
+- [X] T033 [P] 공통 ErrorMessage 컴포넌트 생성 (src/components/common/ErrorMessage.tsx)
 
 **Checkpoint**: Foundation ready - 사용자 스토리 구현을 이제 시작할 수 있습니다
 

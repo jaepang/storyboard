@@ -14,7 +14,11 @@
       "Bash(pnpm add typescript @types/react @types/react-dom @types/node -D)",
       "Bash(pnpm add @supabase/ssr @supabase/supabase-js pdf-lib react-pdf @biomejs/biome vitest @testing-library/react @testing-library/jest-dom jsdom -D)",
       "Bash(git add -A)",
-      "Bash(git commit -m \"feat: Phase 1 Setup 완료 (T001-T008)\n\n- Next.js 15 + React 19 + TypeScript 프로젝트 초기화\n- Supabase, PDF-lib, Vitest, Biome 등 필수 의존성 설치\n- TypeScript, Biome, Vitest, Next.js 설정 파일 생성\n- 환경 변수 예시 파일 (.env.example) 생성\n- 프로젝트 디렉토리 구조 생성 (src/app, components, lib, types, tests)\n- package.json 스크립트 추가 (dev, build, lint, format, test)\n- .gitignore 파일 생성\n- tests/setup.ts 생성 (Vitest + React Testing Library)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+      "Bash(git commit -m \"feat: Phase 1 Setup 완료 (T001-T008)\n\n- Next.js 15 + React 19 + TypeScript 프로젝트 초기화\n- Supabase, PDF-lib, Vitest, Biome 등 필수 의존성 설치\n- TypeScript, Biome, Vitest, Next.js 설정 파일 생성\n- 환경 변수 예시 파일 (.env.example) 생성\n- 프로젝트 디렉토리 구조 생성 (src/app, components, lib, types, tests)\n- package.json 스크립트 추가 (dev, build, lint, format, test)\n- .gitignore 파일 생성\n- tests/setup.ts 생성 (Vitest + React Testing Library)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(pnpm type-check)",
+      "Bash(pnpm lint:fix)",
+      "Bash(pnpm exec biome migrate --write)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Phase 2 완료 - Foundational Infrastructure (T019-T033)\n\nTypeScript 타입 정의:\n- Database 타입 (Supabase 스키마)\n- Conti, Song, Annotation 타입\n- API 요청/응답 타입\n\nSupabase 클라이언트:\n- 서버/클라이언트 컴포넌트용 클라이언트\n- 환경변수 검증 추가\n\n공통 유틸리티:\n- 에러 핸들링 (createErrorResponse, createConflictResponse 등)\n- 유효성 검증 (validateTitle, validateDate, validateBpmArray 등)\n- 포맷팅 (formatBpmArray: \"120 → 140 → 100\")\n\n레이아웃 및 공통 컴포넌트:\n- Root Layout (기본 HTML 구조, 메타데이터)\n- Button 컴포넌트 (primary/secondary/danger variants)\n- Input 컴포넌트 (label, error, helperText)\n- Loading 컴포넌트 (small/medium/large sizes)\n- ErrorMessage 컴포넌트 (title, onRetry)\n\n린트/타입 체크:\n- Biome 설정 마이그레이션 (v2.3.8)\n- 모든 린트 이슈 수정 (접근성, 타입 안전성)\n- TypeScript strict mode 통과\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
