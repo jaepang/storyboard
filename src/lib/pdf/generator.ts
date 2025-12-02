@@ -1,4 +1,4 @@
-import { PDFDocument, StandardFonts, rgb, type PDFPage, type PDFFont } from 'pdf-lib';
+import { PDFDocument, type PDFFont, type PDFPage, rgb, StandardFonts } from 'pdf-lib';
 import type { ContiWithSongs } from '@/types/conti';
 
 /**
@@ -95,7 +95,7 @@ export class PdfGenerator {
     y -= 40;
 
     // Worship Date
-    const date = new Date(conti.worship_date).toLocaleDateString('ko-KR', {
+    const date = new Date(conti.worship_date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -171,7 +171,7 @@ export class PdfGenerator {
       if (song.composer) details.push(`Composer: ${song.composer}`);
       if (song.key_signature) details.push(`Key: ${song.key_signature}`);
       if (song.bpm_array && song.bpm_array.length > 0) {
-        details.push(`BPM: ${song.bpm_array.join(' → ')}`);
+        details.push(`BPM: ${song.bpm_array.join(' -> ')}`);
       }
 
       if (details.length > 0) {
@@ -240,7 +240,7 @@ export class PdfGenerator {
 
     // BPM Array
     if (song.bpm_array && song.bpm_array.length > 0) {
-      page.drawText(`BPM: ${song.bpm_array.join(' → ')}`, {
+      page.drawText(`BPM: ${song.bpm_array.join(' -> ')}`, {
         x: margin,
         y,
         size: 14,

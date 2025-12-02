@@ -12,14 +12,14 @@ import type { ApiResponse } from '@/types/api';
 import type { UpdateSongRequest } from '@/types/song';
 
 /**
- * PATCH /api/conti/[conti_id]/song/[song_id] - 곡 정보 수정 (낙관적 잠금 적용)
+ * PATCH /api/conti/[contiId]/song/[song_id] - 곡 정보 수정 (낙관적 잠금 적용)
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<{ conti_id: string; song_id: string }> }
+  { params }: { params: Promise<{ id: string; song_id: string }> }
 ) {
   try {
-    const { conti_id, song_id } = await params;
+    const { id: contiId, song_id } = await params;
     const supabase = await createClient();
 
     // 인증 확인
@@ -35,7 +35,7 @@ export async function PATCH(
     const { data: conti, error: contiError } = await supabase
       .from('contis')
       .select('id')
-      .eq('id', conti_id)
+      .eq('id', contiId)
       .eq('user_id', user.id)
       .single();
 
@@ -57,7 +57,7 @@ export async function PATCH(
       .from('conti_songs')
       .select('*, songs(*)')
       .eq('id', song_id)
-      .eq('conti_id', conti_id)
+      .eq('contiId', contiId)
       .single();
 
     if (fetchError || !currentContiSong) {
@@ -147,7 +147,7 @@ export async function PATCH(
       .from('conti_songs')
       .update(contiSongUpdateData)
       .eq('id', song_id)
-      .eq('conti_id', conti_id)
+      .eq('contiId', contiId)
       .eq('version', body.version)
       .select()
       .single();
@@ -170,14 +170,14 @@ export async function PATCH(
 }
 
 /**
- * DELETE /api/conti/[conti_id]/song/[song_id] - 곡 삭제
+ * DELETE /api/conti/[contiId]/song/[song_id] - 곡 삭제
  */
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: Promise<{ conti_id: string; song_id: string }> }
+  { params }: { params: Promise<{ id: string; song_id: string }> }
 ) {
   try {
-    const { conti_id, song_id } = await params;
+    const { id: contiId, song_id } = await params;
     const supabase = await createClient();
 
     // 인증 확인
@@ -193,7 +193,7 @@ export async function DELETE(
     const { data: conti, error: contiError } = await supabase
       .from('contis')
       .select('id')
-      .eq('id', conti_id)
+      .eq('id', contiId)
       .eq('user_id', user.id)
       .single();
 
@@ -206,7 +206,7 @@ export async function DELETE(
       .from('conti_songs')
       .select('song_id')
       .eq('id', song_id)
-      .eq('conti_id', conti_id)
+      .eq('contiId', contiId)
       .single();
 
     if (fetchError || !contiSong) {
@@ -218,7 +218,7 @@ export async function DELETE(
       .from('conti_songs')
       .delete()
       .eq('id', song_id)
-      .eq('conti_id', conti_id);
+      .eq('contiId', contiId);
 
     if (deleteContiSongError) {
       return createErrorResponse('DATABASE_ERROR', '곡 삭제에 실패했습니다.', {

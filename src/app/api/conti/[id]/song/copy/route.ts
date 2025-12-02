@@ -10,15 +10,12 @@ import type { ApiResponse } from '@/types/api';
 import type { CopySongRequest } from '@/types/song';
 
 /**
- * POST /api/conti/[conti_id]/song/copy - 기존 곡 복사
+ * POST /api/conti/[contiId]/song/copy - 기존 곡 복사
  * 독립적 복사: song과 conti_song을 모두 새로 생성
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ conti_id: string }> }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { conti_id } = await params;
+    const { id: contiId } = await params;
     const supabase = await createClient();
 
     // 인증 확인
@@ -34,7 +31,7 @@ export async function POST(
     const { data: conti, error: contiError } = await supabase
       .from('contis')
       .select('id')
-      .eq('id', conti_id)
+      .eq('id', contiId)
       .eq('user_id', user.id)
       .single();
 
@@ -88,7 +85,7 @@ export async function POST(
     const { data: maxOrderData } = await supabase
       .from('conti_songs')
       .select('order_index')
-      .eq('conti_id', conti_id)
+      .eq('contiId', contiId)
       .order('order_index', { ascending: false })
       .limit(1)
       .maybeSingle();
@@ -133,7 +130,7 @@ export async function POST(
     const { data: newContiSong, error: newContiSongError } = await supabase
       .from('conti_songs')
       .insert({
-        conti_id,
+        contiId,
         song_id: (newSong as { id: string }).id,
         title: sourceContiData.title,
         composer: sourceContiData.composer,

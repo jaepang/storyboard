@@ -5,9 +5,15 @@ import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import type { Conti, CreateContiRequest, UpdateContiRequest } from '@/types/conti';
 
+export interface ContiFormData {
+  title: string;
+  worship_date: string;
+  notes?: string;
+}
+
 export interface ContiFormProps {
   initialData?: Conti;
-  onSubmit: (data: any) => Promise<void>;
+  onSubmit: (data: ContiFormData) => Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
 }

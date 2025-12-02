@@ -45,16 +45,16 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### Supabase 데이터베이스 설정
 
-- [ ] T009 Supabase 프로젝트 생성 및 API 키 설정 (.env.local)
-- [ ] T010 데이터베이스 마이그레이션: songs 테이블 생성 (data-model.md 참조)
-- [ ] T011 데이터베이스 마이그레이션: contis 테이블 생성 (data-model.md 참조)
-- [ ] T012 데이터베이스 마이그레이션: conti_songs 테이블 생성 (data-model.md 참조)
-- [ ] T013 데이터베이스 마이그레이션: 인덱스 생성 (외래 키, worship_date, title)
-- [ ] T014 데이터베이스 마이그레이션: updated_at 트리거 및 함수 생성
-- [ ] T015 데이터베이스 마이그레이션: contis RLS 정책 설정
-- [ ] T016 데이터베이스 마이그레이션: conti_songs RLS 정책 설정
-- [ ] T017 데이터베이스 마이그레이션: songs RLS 정책 설정
-- [ ] T018 Supabase Storage 버킷 생성 (sheet-music) 및 정책 설정
+- [X] T009 Supabase 프로젝트 생성 및 API 키 설정 (.env.local)
+- [X] T010 데이터베이스 마이그레이션: songs 테이블 생성 (data-model.md 참조)
+- [X] T011 데이터베이스 마이그레이션: contis 테이블 생성 (data-model.md 참조)
+- [X] T012 데이터베이스 마이그레이션: conti_songs 테이블 생성 (data-model.md 참조)
+- [X] T013 데이터베이스 마이그레이션: 인덱스 생성 (외래 키, worship_date, title)
+- [X] T014 데이터베이스 마이그레이션: updated_at 트리거 및 함수 생성
+- [X] T015 데이터베이스 마이그레이션: contis RLS 정책 설정
+- [X] T016 데이터베이스 마이그레이션: conti_songs RLS 정책 설정
+- [X] T017 데이터베이스 마이그레이션: songs RLS 정책 설정
+- [X] T018 Supabase Storage 버킷 생성 (sheet-music) 및 정책 설정
 
 ### TypeScript 타입 정의
 
@@ -179,8 +179,8 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### 테스트 (US6) - 핵심 로직만
 
-- [ ] T065 [P] [US6] PDF 생성 통합 테스트 (tests/integration/pdf-generation.test.ts) - 샘플 데이터로 PDF 생성 및 4초 목표 검증
-- [ ] T066 [P] [US6] BPM 배열 포맷 단위 테스트 (tests/unit/format-bpm.test.ts) - "120 → 140 → 100" 포맷 검증
+- [X] T065 [P] [US6] PDF 생성 통합 테스트 (tests/integration/pdf-generation.test.ts) - 샘플 데이터로 PDF 생성 및 4초 목표 검증
+- [X] T066 [P] [US6] BPM 배열 포맷 단위 테스트 (tests/unit/format-bpm.test.ts) - "120 → 140 → 100" 포맷 검증
 
 **Checkpoint**: User Story 6 완료 - 콘티 미리보기 및 PDF 다운로드가 독립적으로 동작합니다
 

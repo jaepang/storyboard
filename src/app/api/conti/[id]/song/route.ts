@@ -11,14 +11,11 @@ import type { ApiResponse } from '@/types/api';
 import type { CreateSongRequest } from '@/types/song';
 
 /**
- * POST /api/conti/[conti_id]/song - 새 곡 추가
+ * POST /api/conti/[contiId]/song - 새 곡 추가
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ conti_id: string }> }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { conti_id } = await params;
+    const { id: contiId } = await params;
     const supabase = await createClient();
 
     // 인증 확인
@@ -34,7 +31,7 @@ export async function POST(
     const { data: conti, error: contiError } = await supabase
       .from('contis')
       .select('id')
-      .eq('id', conti_id)
+      .eq('id', contiId)
       .eq('user_id', user.id)
       .single();
 
@@ -60,7 +57,7 @@ export async function POST(
     const { data: maxOrderData } = await supabase
       .from('conti_songs')
       .select('order_index')
-      .eq('conti_id', conti_id)
+      .eq('contiId', contiId)
       .order('order_index', { ascending: false })
       .limit(1)
       .maybeSingle();
@@ -90,7 +87,7 @@ export async function POST(
     const { data: contiSong, error: contiSongError } = await supabase
       .from('conti_songs')
       .insert({
-        conti_id,
+        contiId,
         song_id: (song as { id: string }).id,
         title: body.title,
         composer: body.composer || null,

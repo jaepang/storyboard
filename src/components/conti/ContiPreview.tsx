@@ -55,9 +55,7 @@ export default function ContiPreview({ contiId }: ContiPreviewProps) {
       )}
 
       <div className="space-y-4">
-        <p className="text-sm text-gray-600">
-          PDF 미리보기를 새 탭에서 열어 콘티를 확인하세요.
-        </p>
+        <p className="text-sm text-gray-600">PDF 미리보기를 새 탭에서 열어 콘티를 확인하세요.</p>
 
         <div className="flex gap-3">
           <Button variant="secondary" onClick={handlePreview} isLoading={isLoading}>

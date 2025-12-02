@@ -5,9 +5,19 @@ import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import type { ContiSong, CreateSongRequest, UpdateSongRequest } from '@/types/song';
 
+export interface SongFormData {
+  title: string;
+  composer?: string;
+  lyricist?: string;
+  key_signature?: string;
+  bpm_array: number[];
+  time_signature?: string;
+  notes?: string;
+}
+
 export interface SongFormProps {
   initialData?: ContiSong;
-  onSubmit: (data: any) => Promise<void>;
+  onSubmit: (data: SongFormData) => Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
 }

@@ -10,14 +10,11 @@ import type { ApiResponse } from '@/types/api';
 import type { ReorderSongsRequest } from '@/types/song';
 
 /**
- * PUT /api/conti/[conti_id]/song/reorder - 곡 순서 변경
+ * PUT /api/conti/[contiId]/song/reorder - 곡 순서 변경
  */
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ conti_id: string }> }
-) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { conti_id } = await params;
+    const { id: contiId } = await params;
     const supabase = await createClient();
 
     // 인증 확인
@@ -33,7 +30,7 @@ export async function PUT(
     const { data: conti, error: contiError } = await supabase
       .from('contis')
       .select('id')
-      .eq('id', conti_id)
+      .eq('id', contiId)
       .eq('user_id', user.id)
       .single();
 
@@ -52,7 +49,7 @@ export async function PUT(
     const { data: currentSongs, error: fetchError } = await supabase
       .from('conti_songs')
       .select('id')
-      .eq('conti_id', conti_id);
+      .eq('contiId', contiId);
 
     if (fetchError) {
       return createErrorResponse('DATABASE_ERROR', '곡 목록 조회에 실패했습니다.', {
@@ -75,7 +72,7 @@ export async function PUT(
         .from('conti_songs')
         .update({ order_index: index })
         .eq('id', songId)
-        .eq('conti_id', conti_id)
+        .eq('contiId', contiId)
     );
 
     const results = await Promise.all(updatePromises);
@@ -92,7 +89,7 @@ export async function PUT(
     const { data: updatedSongs, error: refetchError } = await supabase
       .from('conti_songs')
       .select('*')
-      .eq('conti_id', conti_id)
+      .eq('contiId', contiId)
       .order('order_index', { ascending: true });
 
     if (refetchError) {

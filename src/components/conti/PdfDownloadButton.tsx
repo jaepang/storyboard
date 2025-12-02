@@ -59,11 +59,7 @@ export default function PdfDownloadButton({
       <Button variant={variant} onClick={handleDownload} isLoading={isDownloading}>
         {isDownloading ? (
           <>
-            <svg
-              className="animate-spin -ml-1 mr-2 h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
+            <svg className="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
               <title>Loading</title>
               <circle
                 className="opacity-25"
@@ -102,9 +98,7 @@ export default function PdfDownloadButton({
         )}
       </Button>
 
-      {error && (
-        <p className="mt-2 text-sm text-red-600">{error}</p>
-      )}
+      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
     </div>
   );
 }
