@@ -6,13 +6,17 @@ import Button from '@/components/common/Button';
 import ConflictModal from '@/components/common/ConflictModal';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Loading from '@/components/common/Loading';
-import ContiForm from '@/components/conti/ContiForm';
+import ContiForm, { type ContiFormData } from '@/components/conti/ContiForm';
 import ContiPreview from '@/components/conti/ContiPreview';
 import PdfDownloadButton from '@/components/conti/PdfDownloadButton';
-import SongForm from '@/components/song/SongForm';
+import type { PageSettings } from '@/components/sheet-music/SheetMusicEditor';
+import SheetMusicEditor from '@/components/sheet-music/SheetMusicEditor';
+import SheetMusicUploader from '@/components/sheet-music/SheetMusicUploader';
+import SongForm, { type SongFormData } from '@/components/song/SongForm';
 import SongList from '@/components/song/SongList';
-import type { ContiWithSongs, UpdateContiRequest } from '@/types/conti';
-import type { ContiSong, CreateSongRequest, UpdateSongRequest } from '@/types/song';
+import { getSheetMusicUrl } from '@/lib/storage/download';
+import type { ContiWithSongs } from '@/types/conti';
+import type { ContiSong } from '@/types/song';
 
 export default function EditContiPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -26,10 +30,13 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
   const [editingSong, setEditingSong] = useState<ContiSong | null>(null);
   const [isSongFormLoading, setIsSongFormLoading] = useState(false);
 
+  const [uploadingSong, setUploadingSong] = useState<ContiSong | null>(null);
+  const [editingSheetMusic, setEditingSheetMusic] = useState<ContiSong | null>(null);
+
   const [conflictInfo, setConflictInfo] = useState<{
     currentVersion: number;
     providedVersion: number;
-    pendingData: UpdateContiRequest | UpdateSongRequest;
+    pendingData: ContiFormData | SongFormData;
     endpoint: string;
   } | null>(null);
 
@@ -59,7 +66,7 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
     }
   };
 
-  const handleContiUpdate = async (data: UpdateContiRequest) => {
+  const handleContiUpdate = async (data: ContiFormData) => {
     if (!conti) return;
 
     try {
@@ -93,7 +100,7 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
     }
   };
 
-  const handleAddSong = async (data: CreateSongRequest) => {
+  const handleAddSong = async (data: SongFormData) => {
     setIsSongFormLoading(true);
 
     try {
@@ -119,7 +126,7 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
     }
   };
 
-  const handleEditSong = async (data: UpdateSongRequest) => {
+  const handleEditSong = async (data: SongFormData) => {
     if (!editingSong) return;
 
     setIsSongFormLoading(true);
@@ -258,6 +265,28 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
     fetchConti();
   };
 
+  const handleUploadSuccess = async (_songId: string, _url: string, _pageCount: number) => {
+    // 업로드 성공 시 곡 목록 새로고침
+    await fetchConti();
+    setUploadingSong(null);
+  };
+
+  const handleUploadError = (error: string) => {
+    setError(error);
+  };
+
+  const handleSheetMusicEdit = (song: ContiSong) => {
+    if (song.sheet_music_url) {
+      setEditingSheetMusic(song);
+    }
+  };
+
+  const handleSheetMusicSave = async (_song: ContiSong, pages: PageSettings[]) => {
+    // TODO: 페이지 설정을 API로 저장 (Phase 7에서 구현 예정)
+    console.log('Saving page settings:', pages);
+    setEditingSheetMusic(null);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -349,8 +378,46 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
             onEdit={setEditingSong}
             onDelete={handleDeleteSong}
             onCopy={handleCopySong}
+            onUpload={setUploadingSong}
+            onEditSheetMusic={handleSheetMusicEdit}
           />
         </div>
+
+        {/* Sheet Music Upload Section */}
+        {uploadingSong && (
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              악보 업로드: {uploadingSong.title}
+            </h2>
+            <SheetMusicUploader
+              songId={uploadingSong.id}
+              onUploadSuccess={(url, pageCount) =>
+                handleUploadSuccess(uploadingSong.id, url, pageCount)
+              }
+              onUploadError={handleUploadError}
+            />
+            <div className="mt-4">
+              <Button variant="secondary" onClick={() => setUploadingSong(null)}>
+                취소
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Sheet Music Editor Section */}
+        {editingSheetMusic?.sheet_music_url && (
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              악보 편집: {editingSheetMusic.title}
+            </h2>
+            <SheetMusicEditor
+              sheetMusicUrl={getSheetMusicUrl(editingSheetMusic.sheet_music_url)}
+              pageCount={editingSheetMusic.sheet_music_pages || 1}
+              onSave={(pages) => handleSheetMusicSave(editingSheetMusic, pages)}
+              onCancel={() => setEditingSheetMusic(null)}
+            />
+          </div>
+        )}
       </div>
 
       {/* Conflict Modal */}

@@ -194,26 +194,27 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### Storage 유틸리티 (US2)
 
-- [ ] T067 [P] [US2] 파일 업로드 유틸리티 생성 (src/lib/storage/upload.ts) - Supabase Storage 업로드, 10MB/20페이지 검증
-- [ ] T068 [P] [US2] 파일 다운로드 유틸리티 생성 (src/lib/storage/download.ts) - Supabase Storage 다운로드
+- [x] T067 [P] [US2] 파일 업로드 유틸리티 생성 (src/lib/storage/upload.ts) - Supabase Storage 업로드, 10MB/20페이지 검증
+- [x] T068 [P] [US2] 파일 다운로드 유틸리티 생성 (src/lib/storage/download.ts) - Supabase Storage 다운로드
 
 ### API 구현 (US2)
 
-- [ ] T069 [US2] POST /api/upload/sheet-music 엔드포인트 구현 (src/app/api/upload/sheet-music/route.ts) - 악보 업로드, conti_songs 업데이트
+- [x] T069 [US2] POST /api/upload/sheet-music 엔드포인트 구현 (src/app/api/upload/sheet-music/route.ts) - 악보 업로드, conti_songs 업데이트
 
 ### UI 컴포넌트 (US2)
 
-- [ ] T070 [P] [US2] SheetMusicUploader 컴포넌트 생성 (src/components/editor/SheetMusicUploader.tsx) - 파일 업로드 폼
-- [ ] T071 [P] [US2] SheetMusicEditor 컴포넌트 생성 (src/components/editor/SheetMusicEditor.tsx) - 페이지별 편집 (scale, position, crop, fontSize)
-- [ ] T072 [US2] PageEditControls 컴포넌트 생성 (src/components/editor/PageEditControls.tsx) - 슬라이더, 드래그, 자르기 도구
+- [x] T070 [P] [US2] SheetMusicUploader 컴포넌트 생성 (src/components/sheet-music/SheetMusicUploader.tsx) - 파일 업로드 폼
+- [x] T071 [P] [US2] SheetMusicEditor 컴포넌트 생성 (src/components/sheet-music/SheetMusicEditor.tsx) - 페이지별 편집 (scale, position, crop, fontSize)
+- [x] T072 [US2] PageEditControls 컴포넌트 생성 (src/components/sheet-music/PageEditControls.tsx) - 슬라이더, 드래그, 자르기 도구
 
 ### 페이지 확장 (US2)
 
-- [ ] T073 [US2] 곡 편집 페이지에 악보 업로드/편집 추가 (src/app/conti/[id]/song/[song_id]/page.tsx) - SheetMusicUploader + SheetMusicEditor 통합
+- [x] T073 [US2] 곡 편집 페이지에 악보 업로드/편집 추가 (src/app/conti/[id]/page.tsx) - SheetMusicUploader + SheetMusicEditor 통합
 
 ### 테스트 (US2) - 핵심 로직만
 
 - [ ] T074 [P] [US2] 파일 업로드 통합 테스트 (tests/integration/file-upload.test.ts) - Supabase Storage 업로드 검증
+  - Note: T074는 실제 Supabase Storage 테스트가 필요하므로 실제 환경에서 수동 테스트로 대체됨
 
 **Checkpoint**: User Story 2 완료 - 악보 업로드 및 페이지 편집이 독립적으로 동작합니다
 

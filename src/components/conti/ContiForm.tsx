@@ -5,11 +5,7 @@ import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import type { Conti, CreateContiRequest, UpdateContiRequest } from '@/types/conti';
 
-export interface ContiFormData {
-  title: string;
-  worship_date: string;
-  notes?: string;
-}
+export type ContiFormData = CreateContiRequest | UpdateContiRequest;
 
 export interface ContiFormProps {
   initialData?: Conti;
@@ -60,13 +56,13 @@ export default function ContiForm({
           worship_date: worshipDate,
           notes: notes.trim() || undefined,
           version: initialData.version,
-        } as UpdateContiRequest);
+        });
       } else {
         await onSubmit({
           title: title.trim(),
           worship_date: worshipDate,
           notes: notes.trim() || undefined,
-        } as CreateContiRequest);
+        });
       }
     } catch (error) {
       console.error('Form submission error:', error);

@@ -3,15 +3,14 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ErrorMessage from '@/components/common/ErrorMessage';
-import ContiForm from '@/components/conti/ContiForm';
-import type { CreateContiRequest } from '@/types/conti';
+import ContiForm, { type ContiFormData } from '@/components/conti/ContiForm';
 
 export default function NewContiPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (data: CreateContiRequest) => {
+  const handleSubmit = async (data: ContiFormData) => {
     setIsLoading(true);
     setError(null);
 
