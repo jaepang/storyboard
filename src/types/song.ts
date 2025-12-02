@@ -43,10 +43,9 @@ export interface CreateSongRequest {
   composer?: string;
   lyricist?: string;
   key_signature?: string;
-  bpm_array?: number[];
+  bpm_array: number[]; // Required
   time_signature?: string;
   notes?: string;
-  order_index?: number;
 }
 
 // 곡 정보 수정 요청
@@ -58,20 +57,15 @@ export interface UpdateSongRequest {
   bpm_array?: number[];
   time_signature?: string;
   notes?: string;
-  order_index?: number;
   version: number;
 }
 
 // 기존 곡 복사 요청
 export interface CopySongRequest {
-  song_id: string;
-  order_index?: number;
+  source_conti_song_id: string;
 }
 
 // 곡 순서 변경 요청
 export interface ReorderSongsRequest {
-  song_orders: Array<{
-    id: string;
-    order_index: number;
-  }>;
+  song_ids: string[];
 }

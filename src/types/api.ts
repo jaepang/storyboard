@@ -27,6 +27,9 @@ export interface GetContisResponse {
   offset: number;
 }
 
+// 콘티 목록 조회 응답 (별칭)
+export type ContiListResponse = GetContisResponse;
+
 // 콘티 상세 조회 응답
 export type GetContiResponse = ContiWithSongs;
 
@@ -73,5 +76,6 @@ export type ErrorCode =
   | 'CONFLICT'
   | 'VALIDATION_ERROR'
   | 'INVALID_FILE'
+  | 'DATABASE_ERROR'
   | 'PDF_GENERATION_FAILED'
   | 'INTERNAL_ERROR';

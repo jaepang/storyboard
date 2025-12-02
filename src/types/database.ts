@@ -1,6 +1,6 @@
 /**
  * Supabase Database 타입 정의
- * Supabase CLI로 생성: pnpm supabase gen types typescript --project-id [PROJECT_ID]
+ * data-model.md 기반
  */
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
