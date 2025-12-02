@@ -79,7 +79,6 @@ export async function GET(request: NextRequest) {
       case 'title_asc':
         query = query.order('title', { ascending: true });
         break;
-      case 'worship_date_desc':
       default:
         query = query.order('worship_date', { ascending: false });
     }
@@ -96,17 +95,29 @@ export async function GET(request: NextRequest) {
     }
 
     // ContiListItem 형식으로 변환
-    const contis = (data || []).map((item: any) => ({
-      id: item.id,
-      user_id: item.user_id,
-      title: item.title,
-      worship_date: item.worship_date,
-      notes: item.notes,
-      version: item.version,
-      created_at: item.created_at,
-      updated_at: item.updated_at,
-      song_count: Array.isArray(item.conti_songs) ? item.conti_songs.length : 0,
-    }));
+    const contis = (data || []).map(
+      (item: {
+        id: string;
+        user_id: string;
+        title: string;
+        worship_date: string;
+        notes: string | null;
+        version: number;
+        created_at: string;
+        updated_at: string;
+        conti_songs: unknown[];
+      }) => ({
+        id: item.id,
+        user_id: item.user_id,
+        title: item.title,
+        worship_date: item.worship_date,
+        notes: item.notes,
+        version: item.version,
+        created_at: item.created_at,
+        updated_at: item.updated_at,
+        song_count: Array.isArray(item.conti_songs) ? item.conti_songs.length : 0,
+      })
+    );
 
     return NextResponse.json<ApiResponse<ContiListResponse>>({
       data: {

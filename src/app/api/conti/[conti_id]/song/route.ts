@@ -65,7 +65,7 @@ export async function POST(
       .limit(1)
       .maybeSingle();
 
-    const nextOrderIndex = ((maxOrderData as any)?.order_index ?? -1) + 1;
+    const nextOrderIndex = (maxOrderData?.order_index ?? -1) + 1;
 
     // 먼저 songs 테이블에 곡 추가
     // @ts-expect-error - Supabase types work correctly at runtime
@@ -91,7 +91,7 @@ export async function POST(
       .from('conti_songs')
       .insert({
         conti_id,
-        song_id: (song as any).id,
+        song_id: (song as { id: string }).id,
         title: body.title,
         composer: body.composer || null,
         lyricist: body.lyricist || null,
@@ -112,7 +112,7 @@ export async function POST(
       await supabase
         .from('songs')
         .delete()
-        .eq('id', (song as any).id);
+        .eq('id', (song as { id: string }).id);
       return createErrorResponse('DATABASE_ERROR', '콘티에 곡 추가에 실패했습니다.', {
         error: contiSongError,
       });

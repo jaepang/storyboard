@@ -95,33 +95,33 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### API 구현 (US1)
 
-- [ ] T034 [P] [US1] GET /api/conti 엔드포인트 구현 (src/app/api/conti/route.ts) - 콘티 목록 조회
-- [ ] T035 [P] [US1] GET /api/conti/[id] 엔드포인트 구현 (src/app/api/conti/[id]/route.ts) - 단일 콘티 조회 (곡 목록 포함)
-- [ ] T036 [US1] POST /api/conti 엔드포인트 구현 (src/app/api/conti/route.ts) - 콘티 생성
-- [ ] T037 [US1] PATCH /api/conti/[id] 엔드포인트 구현 (src/app/api/conti/[id]/route.ts) - 콘티 수정, 낙관적 잠금 적용
-- [ ] T038 [US1] DELETE /api/conti/[id] 엔드포인트 구현 (src/app/api/conti/[id]/route.ts) - 콘티 삭제
-- [ ] T039 [P] [US1] POST /api/conti/[conti_id]/song 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/route.ts) - 새 곡 추가
-- [ ] T040 [P] [US1] POST /api/conti/[conti_id]/song/copy 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/copy/route.ts) - 기존 곡 복사
-- [ ] T041 [US1] PATCH /api/conti/[conti_id]/song/[song_id] 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/[song_id]/route.ts) - 곡 정보 수정, 낙관적 잠금 적용
-- [ ] T042 [US1] PUT /api/conti/[conti_id]/song/reorder 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/reorder/route.ts) - 곡 순서 변경
-- [ ] T043 [US1] DELETE /api/conti/[conti_id]/song/[song_id] 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/[song_id]/route.ts) - 곡 삭제
+- [X] T034 [P] [US1] GET /api/conti 엔드포인트 구현 (src/app/api/conti/route.ts) - 콘티 목록 조회
+- [X] T035 [P] [US1] GET /api/conti/[id] 엔드포인트 구현 (src/app/api/conti/[id]/route.ts) - 단일 콘티 조회 (곡 목록 포함)
+- [X] T036 [US1] POST /api/conti 엔드포인트 구현 (src/app/api/conti/route.ts) - 콘티 생성
+- [X] T037 [US1] PATCH /api/conti/[id] 엔드포인트 구현 (src/app/api/conti/[id]/route.ts) - 콘티 수정, 낙관적 잠금 적용
+- [X] T038 [US1] DELETE /api/conti/[id] 엔드포인트 구현 (src/app/api/conti/[id]/route.ts) - 콘티 삭제
+- [X] T039 [P] [US1] POST /api/conti/[conti_id]/song 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/route.ts) - 새 곡 추가
+- [X] T040 [P] [US1] POST /api/conti/[conti_id]/song/copy 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/copy/route.ts) - 기존 곡 복사
+- [X] T041 [US1] PATCH /api/conti/[conti_id]/song/[song_id] 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/[song_id]/route.ts) - 곡 정보 수정, 낙관적 잠금 적용
+- [X] T042 [US1] PUT /api/conti/[conti_id]/song/reorder 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/reorder/route.ts) - 곡 순서 변경
+- [X] T043 [US1] DELETE /api/conti/[conti_id]/song/[song_id] 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/[song_id]/route.ts) - 곡 삭제
 
 ### UI 컴포넌트 (US1)
 
-- [ ] T044 [P] [US1] ContiForm 컴포넌트 생성 (src/components/conti/ContiForm.tsx) - 콘티 생성/편집 폼
-- [ ] T045 [P] [US1] SongForm 컴포넌트 생성 (src/components/song/SongForm.tsx) - 곡 추가/편집 폼
-- [ ] T046 [P] [US1] SongList 컴포넌트 생성 (src/components/song/SongList.tsx) - 곡 목록 표시, 드래그 앤 드롭 순서 변경
-- [ ] T047 [US1] 낙관적 잠금 충돌 처리 UI 컴포넌트 생성 (src/components/common/ConflictModal.tsx) - 덮어쓰기/취소 옵션 제공
+- [X] T044 [P] [US1] ContiForm 컴포넌트 생성 (src/components/conti/ContiForm.tsx) - 콘티 생성/편집 폼
+- [X] T045 [P] [US1] SongForm 컴포넌트 생성 (src/components/song/SongForm.tsx) - 곡 추가/편집 폼
+- [X] T046 [P] [US1] SongList 컴포넌트 생성 (src/components/song/SongList.tsx) - 곡 목록 표시, 드래그 앤 드롭 순서 변경
+- [X] T047 [US1] 낙관적 잠금 충돌 처리 UI 컴포넌트 생성 (src/components/common/ConflictModal.tsx) - 덮어쓰기/취소 옵션 제공
 
 ### 페이지 (US1)
 
-- [ ] T048 [US1] 콘티 생성 페이지 구현 (src/app/conti/new/page.tsx) - ContiForm 사용
-- [ ] T049 [US1] 콘티 편집 페이지 구현 (src/app/conti/[id]/page.tsx) - ContiForm + SongList 사용
+- [X] T048 [US1] 콘티 생성 페이지 구현 (src/app/conti/new/page.tsx) - ContiForm 사용
+- [X] T049 [US1] 콘티 편집 페이지 구현 (src/app/conti/[id]/page.tsx) - ContiForm + SongList 사용
 
 ### 테스트 (US1) - 핵심 로직만
 
-- [ ] T050 [P] [US1] 낙관적 잠금 단위 테스트 (tests/unit/optimistic-locking.test.ts) - version 충돌 감지 로직
-- [ ] T051 [P] [US1] 곡 복사 단위 테스트 (tests/unit/song-copy.test.ts) - 독립적 복사 검증
+- [X] T050 [P] [US1] 낙관적 잠금 단위 테스트 (tests/unit/optimistic-locking.test.ts) - version 충돌 감지 로직
+- [X] T051 [P] [US1] 곡 복사 단위 테스트 (tests/unit/song-copy.test.ts) - 독립적 복사 검증
 
 **Checkpoint**: User Story 1 완료 - 콘티 생성, 곡 관리, 낙관적 잠금이 독립적으로 동작합니다
 

@@ -60,10 +60,25 @@ export async function POST(
       return createNotFoundResponse('복사할 곡');
     }
 
-    // 원본 song 확인
-    const sourceSong = Array.isArray((sourceContiSong as any).songs)
-      ? (sourceContiSong as any).songs[0]
-      : (sourceContiSong as any).songs;
+    // 원본 song 확인 (typed as unknown then cast)
+    const sourceData = sourceContiSong as unknown as {
+      songs:
+        | {
+            title: string;
+            composer: string | null;
+            lyricist: string | null;
+            original_key: string | null;
+            genre: string | null;
+          }
+        | {
+            title: string;
+            composer: string | null;
+            lyricist: string | null;
+            original_key: string | null;
+            genre: string | null;
+          }[];
+    };
+    const sourceSong = Array.isArray(sourceData.songs) ? sourceData.songs[0] : sourceData.songs;
 
     if (!sourceSong) {
       return createNotFoundResponse('복사할 곡 정보');
@@ -78,7 +93,7 @@ export async function POST(
       .limit(1)
       .maybeSingle();
 
-    const nextOrderIndex = ((maxOrderData as any)?.order_index ?? -1) + 1;
+    const nextOrderIndex = (maxOrderData?.order_index ?? -1) + 1;
 
     // 1. 새로운 song 생성 (독립적 복사)
     // @ts-expect-error - Supabase types work correctly at runtime
@@ -102,22 +117,35 @@ export async function POST(
 
     // 2. 새로운 conti_song 생성 (모든 정보 복사)
     // @ts-expect-error - Supabase types work correctly at runtime
+    const sourceContiData = sourceContiSong as unknown as {
+      title: string;
+      composer: string | null;
+      lyricist: string | null;
+      key_signature: string | null;
+      bpm_array: number[];
+      time_signature: string | null;
+      sheet_music_url: string | null;
+      sheet_music_pages: number | null;
+      annotations: unknown;
+      notes: string | null;
+    };
+
     const { data: newContiSong, error: newContiSongError } = await supabase
       .from('conti_songs')
       .insert({
         conti_id,
-        song_id: (newSong as any).id,
-        title: (sourceContiSong as any).title,
-        composer: (sourceContiSong as any).composer,
-        lyricist: (sourceContiSong as any).lyricist,
-        key_signature: (sourceContiSong as any).key_signature,
-        bpm_array: (sourceContiSong as any).bpm_array,
-        time_signature: (sourceContiSong as any).time_signature,
-        sheet_music_url: (sourceContiSong as any).sheet_music_url,
-        sheet_music_pages: (sourceContiSong as any).sheet_music_pages,
-        annotations: (sourceContiSong as any).annotations,
+        song_id: (newSong as { id: string }).id,
+        title: sourceContiData.title,
+        composer: sourceContiData.composer,
+        lyricist: sourceContiData.lyricist,
+        key_signature: sourceContiData.key_signature,
+        bpm_array: sourceContiData.bpm_array,
+        time_signature: sourceContiData.time_signature,
+        sheet_music_url: sourceContiData.sheet_music_url,
+        sheet_music_pages: sourceContiData.sheet_music_pages,
+        annotations: sourceContiData.annotations,
         order_index: nextOrderIndex,
-        notes: (sourceContiSong as any).notes,
+        notes: sourceContiData.notes,
       })
       .select()
       .single();
@@ -127,7 +155,7 @@ export async function POST(
       await supabase
         .from('songs')
         .delete()
-        .eq('id', (newSong as any).id);
+        .eq('id', (newSong as { id: string }).id);
       return createErrorResponse('DATABASE_ERROR', '콘티에 곡 복사 추가에 실패했습니다.', {
         error: newContiSongError,
       });

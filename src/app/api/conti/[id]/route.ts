@@ -15,7 +15,7 @@ import type { ContiSong } from '@/types/song';
 /**
  * GET /api/conti/[id] - 단일 콘티 조회 (곡 목록 포함)
  */
-export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const supabase = await createClient();
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     const contiWithSongs: ContiWithSongs = {
-      ...(conti as any),
+      ...(conti as unknown as Omit<ContiWithSongs, 'songs'>),
       songs: (songs || []) as ContiSong[],
     };
 
@@ -106,8 +106,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
 
     // 낙관적 잠금 검증
-    if ((currentConti as any).version !== body.version) {
-      return createConflictResponse((currentConti as any).version, body.version);
+    const currentContiData = currentConti as { version: number };
+    if (currentContiData.version !== body.version) {
+      return createConflictResponse(currentContiData.version, body.version);
     }
 
     // 필드 유효성 검증
@@ -154,7 +155,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
 
     if (!data) {
-      return createConflictResponse((currentConti as any).version, body.version);
+      return createConflictResponse((currentConti as { version: number }).version, body.version);
     }
 
     return NextResponse.json<ApiResponse<typeof data>>({
@@ -170,7 +171,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
  * DELETE /api/conti/[id] - 콘티 삭제
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {

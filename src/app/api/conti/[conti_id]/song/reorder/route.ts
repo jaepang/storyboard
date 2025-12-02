@@ -60,7 +60,7 @@ export async function PUT(
       });
     }
 
-    const currentSongIds = new Set((currentSongs || []).map((s: any) => s.id));
+    const currentSongIds = new Set((currentSongs || []).map((s: { id: string }) => s.id));
 
     // 요청된 모든 곡이 현재 콘티에 속하는지 확인
     const allSongsValid = body.song_ids.every((id) => currentSongIds.has(id));

@@ -65,13 +65,17 @@ export async function PATCH(
     }
 
     // 낙관적 잠금 검증
-    if ((currentContiSong as any).version !== body.version) {
-      return createConflictResponse((currentContiSong as any).version, body.version);
+    const currentContiData = currentContiSong as unknown as {
+      version: number;
+      songs: unknown | unknown[];
+    };
+    if (currentContiData.version !== body.version) {
+      return createConflictResponse(currentContiData.version, body.version);
     }
 
-    const currentSong = Array.isArray((currentContiSong as any).songs)
-      ? (currentContiSong as any).songs[0]
-      : (currentContiSong as any).songs;
+    const currentSong = Array.isArray(currentContiData.songs)
+      ? currentContiData.songs[0]
+      : currentContiData.songs;
 
     // 필드 유효성 검증
     if (body.title !== undefined) {
@@ -153,7 +157,7 @@ export async function PATCH(
     }
 
     if (!data) {
-      return createConflictResponse((currentContiSong as any).version, body.version);
+      return createConflictResponse(currentContiData.version, body.version);
     }
 
     return NextResponse.json<ApiResponse<typeof data>>({
@@ -169,7 +173,7 @@ export async function PATCH(
  * DELETE /api/conti/[conti_id]/song/[song_id] - 곡 삭제
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ conti_id: string; song_id: string }> }
 ) {
   try {
@@ -226,7 +230,7 @@ export async function DELETE(
     await supabase
       .from('songs')
       .delete()
-      .eq('id', (contiSong as any).song_id);
+      .eq('id', (contiSong as { song_id: string }).song_id);
 
     return NextResponse.json<ApiResponse<null>>(
       {
