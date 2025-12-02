@@ -55,9 +55,9 @@ export async function GET(request: NextRequest) {
       )
       .eq('user_id', user.id);
 
-    // 검색 필터
+    // 검색 필터 (콘티 제목 또는 곡 제목)
     if (params.search) {
-      query = query.ilike('title', `%${params.search}%`);
+      query = query.or(`title.ilike.%${params.search}%,conti_songs.title.ilike.%${params.search}%`);
     }
 
     // 날짜 범위 필터

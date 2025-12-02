@@ -227,7 +227,10 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
 
     try {
       // Force update by incrementing version
-      const updatedData = { ...pendingData, version: (pendingData as { version: number }).version + 1 };
+      const updatedData = {
+        ...pendingData,
+        version: (pendingData as { version: number }).version + 1,
+      };
 
       const response = await fetch(endpoint, {
         method: 'PATCH',

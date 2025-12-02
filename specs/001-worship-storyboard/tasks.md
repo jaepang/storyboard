@@ -135,17 +135,17 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### API 확장 (US5)
 
-- [ ] T052 [US5] GET /api/conti에 검색 기능 추가 (src/app/api/conti/route.ts) - title, song title 검색, 날짜 범위 필터
+- [X] T052 [US5] GET /api/conti에 검색 기능 추가 (src/app/api/conti/route.ts) - title, song title 검색, 날짜 범위 필터
 
 ### UI 컴포넌트 (US5)
 
-- [ ] T053 [P] [US5] SearchBar 컴포넌트 생성 (src/components/conti/SearchBar.tsx) - 검색창 및 필터
-- [ ] T054 [P] [US5] ContiListItem 컴포넌트 생성 (src/components/conti/ContiListItem.tsx) - 콘티 목록 항목 표시
-- [ ] T055 [US5] ContiList 컴포넌트 생성 (src/components/conti/ContiList.tsx) - 콘티 목록 및 페이지네이션
+- [X] T053 [P] [US5] SearchBar 컴포넌트 생성 (src/components/conti/SearchBar.tsx) - 검색창 및 필터
+- [X] T054 [P] [US5] ContiListItem 컴포넌트 생성 (src/components/conti/ContiListItem.tsx) - 콘티 목록 항목 표시
+- [X] T055 [US5] ContiList 컴포넌트 생성 (src/components/conti/ContiList.tsx) - 콘티 목록 및 페이지네이션
 
 ### 페이지 (US5)
 
-- [ ] T056 [US5] 홈 페이지 (콘티 목록) 구현 (src/app/page.tsx) - SearchBar + ContiList 사용
+- [X] T056 [US5] 홈 페이지 (콘티 목록) 구현 (src/app/page.tsx) - SearchBar + ContiList 사용
 
 **Checkpoint**: User Story 5 완료 - 콘티 조회 및 검색이 독립적으로 동작합니다
 
