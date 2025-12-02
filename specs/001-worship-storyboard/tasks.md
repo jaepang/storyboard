@@ -159,23 +159,23 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### PDF 생성 로직 (US6)
 
-- [ ] T057 [P] [US6] PDF 생성 유틸리티 생성 (src/lib/pdf/generator.ts) - pdf-lib 기반 PDF 생성, 한글 폰트 임베딩
-- [ ] T058 [P] [US6] PDF 콘티 정보 페이지 렌더링 함수 (src/lib/pdf/conti-info-page.ts) - 첫 페이지 생성 (제목, 날짜, 곡 목록)
-- [ ] T059 [P] [US6] PDF 악보 페이지 렌더링 함수 (src/lib/pdf/sheet-music-page.ts) - 악보 임베딩, BPM 배열 "120 → 140 → 100" 포맷
-- [ ] T060 [US6] PDF 주석 렌더링 함수 (src/lib/pdf/annotations.ts) - 벡터 주석 PDF 레이어로 변환
+- [X] T057 [P] [US6] PDF 생성 유틸리티 생성 (src/lib/pdf/generator.ts) - pdf-lib 기반 PDF 생성, 한글 폰트 임베딩
+- [X] T058 [P] [US6] PDF 콘티 정보 페이지 렌더링 함수 (src/lib/pdf/conti-info-page.ts) - 첫 페이지 생성 (제목, 날짜, 곡 목록)
+- [X] T059 [P] [US6] PDF 악보 페이지 렌더링 함수 (src/lib/pdf/sheet-music-page.ts) - 악보 임베딩, BPM 배열 "120 → 140 → 100" 포맷
+- [X] T060 [US6] PDF 주석 렌더링 함수 (src/lib/pdf/annotations.ts) - 벡터 주석 PDF 레이어로 변환
 
 ### API 구현 (US6)
 
-- [ ] T061 [US6] GET /api/pdf/[conti_id] 엔드포인트 구현 (src/app/api/pdf/[conti_id]/route.ts) - PDF 생성 및 다운로드, 4초 이내 목표
+- [X] T061 [US6] GET /api/pdf/[conti_id] 엔드포인트 구현 (src/app/api/pdf/[conti_id]/route.ts) - PDF 생성 및 다운로드, 4초 이내 목표
 
 ### UI 컴포넌트 (US6)
 
-- [ ] T062 [P] [US6] ContiPreview 컴포넌트 생성 (src/components/conti/ContiPreview.tsx) - React-PDF 기반 미리보기
-- [ ] T063 [P] [US6] PdfDownloadButton 컴포넌트 생성 (src/components/conti/PdfDownloadButton.tsx) - PDF 다운로드 버튼
+- [X] T062 [P] [US6] ContiPreview 컴포넌트 생성 (src/components/conti/ContiPreview.tsx) - React-PDF 기반 미리보기
+- [X] T063 [P] [US6] PdfDownloadButton 컴포넌트 생성 (src/components/conti/PdfDownloadButton.tsx) - PDF 다운로드 버튼
 
 ### 페이지 확장 (US6)
 
-- [ ] T064 [US6] 콘티 상세 페이지에 미리보기 및 다운로드 추가 (src/app/conti/[id]/page.tsx) - ContiPreview + PdfDownloadButton 통합
+- [X] T064 [US6] 콘티 상세 페이지에 미리보기 및 다운로드 추가 (src/app/conti/[id]/page.tsx) - ContiPreview + PdfDownloadButton 통합
 
 ### 테스트 (US6) - 핵심 로직만
 

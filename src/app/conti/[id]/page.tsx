@@ -7,6 +7,8 @@ import ConflictModal from '@/components/common/ConflictModal';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Loading from '@/components/common/Loading';
 import ContiForm from '@/components/conti/ContiForm';
+import ContiPreview from '@/components/conti/ContiPreview';
+import PdfDownloadButton from '@/components/conti/PdfDownloadButton';
 import SongForm from '@/components/song/SongForm';
 import SongList from '@/components/song/SongList';
 import type { ContiWithSongs, UpdateContiRequest } from '@/types/conti';
@@ -288,13 +290,19 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold text-gray-900">콘티 편집</h1>
-            <Button variant="secondary" onClick={() => router.back()}>
-              뒤로
-            </Button>
+            <div className="flex gap-2">
+              <PdfDownloadButton contiId={conti.id} contiTitle={conti.title} />
+              <Button variant="secondary" onClick={() => router.back()}>
+                뒤로
+              </Button>
+            </div>
           </div>
 
           <ContiForm initialData={conti} onSubmit={handleContiUpdate} isLoading={false} />
         </div>
+
+        {/* PDF Preview Section */}
+        <ContiPreview contiId={conti.id} />
 
         {/* Songs Section */}
         <div className="bg-white rounded-lg shadow p-6">
