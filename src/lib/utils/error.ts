@@ -4,6 +4,7 @@
 
 import { NextResponse } from 'next/server';
 import type { ApiError, ErrorCode } from '@/types/api';
+import * as logger from './logger';
 
 /**
  * API 에러 응답 생성
@@ -14,6 +15,11 @@ export function createErrorResponse(
   details?: Record<string, unknown>,
   status: number = 500
 ): NextResponse<ApiError> {
+  // 에러 로깅 (500번대 에러만)
+  if (status >= 500) {
+    logger.error(`API Error: ${code} - ${message}`, undefined, { code, details, status });
+  }
+
   return NextResponse.json<ApiError>(
     {
       error: code,

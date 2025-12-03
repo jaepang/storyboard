@@ -28,6 +28,32 @@ export interface UploadResult {
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const MAX_PAGE_COUNT = 20;
 const ALLOWED_FILE_TYPE = 'application/pdf';
+const PDF_MAGIC_NUMBER = [0x25, 0x50, 0x44, 0x46]; // %PDF
+
+/**
+ * 파일의 매직 넘버를 검증합니다.
+ *
+ * PDF 파일은 반드시 "%PDF" (0x25 0x50 0x44 0x46)로 시작해야 합니다.
+ * 이를 통해 파일 확장자만 변경한 악의적인 파일을 차단할 수 있습니다.
+ */
+async function validatePdfMagicNumber(file: File): Promise<boolean> {
+  try {
+    // 파일의 첫 4바이트 읽기
+    const arrayBuffer = await file.slice(0, 4).arrayBuffer();
+    const bytes = new Uint8Array(arrayBuffer);
+
+    // Magic Number 비교
+    for (let i = 0; i < PDF_MAGIC_NUMBER.length; i++) {
+      if (bytes[i] !== PDF_MAGIC_NUMBER[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  } catch (_error) {
+    return false;
+  }
+}
 
 /**
  * PDF 파일의 페이지 수를 추출합니다.
@@ -37,7 +63,7 @@ async function getPdfPageCount(file: File): Promise<number> {
     const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer);
     return pdfDoc.getPageCount();
-  } catch (error) {
+  } catch (_error) {
     throw new Error('PDF 파일이 손상되었거나 읽을 수 없습니다.');
   }
 }
@@ -51,13 +77,25 @@ async function getPdfPageCount(file: File): Promise<number> {
 export async function validateSheetMusicFile(
   file: File
 ): Promise<{ valid: true; pageCount: number } | { valid: false; error: UploadValidationError }> {
-  // 파일 타입 검증
+  // 파일 타입 검증 (MIME type)
   if (file.type !== ALLOWED_FILE_TYPE) {
     return {
       valid: false,
       error: {
         type: 'INVALID_FILE_TYPE',
         message: 'PDF 파일만 업로드할 수 있습니다.',
+      },
+    };
+  }
+
+  // Magic Number 검증 (파일 헤더)
+  const isValidPdf = await validatePdfMagicNumber(file);
+  if (!isValidPdf) {
+    return {
+      valid: false,
+      error: {
+        type: 'INVALID_FILE_TYPE',
+        message: '올바른 PDF 파일이 아닙니다. 파일 형식을 확인하세요.',
       },
     };
   }
@@ -88,7 +126,7 @@ export async function validateSheetMusicFile(
     }
 
     return { valid: true, pageCount };
-  } catch (error) {
+  } catch (_error) {
     return {
       valid: false,
       error: {

@@ -40,9 +40,9 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
     endpoint: string;
   } | null>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: fetchConti is defined after useEffect
   useEffect(() => {
     fetchConti();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchConti = async () => {

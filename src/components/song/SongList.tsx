@@ -105,19 +105,17 @@ function SongItem({ song, onEdit, onDelete, onCopy, onUpload, onEditSheetMusic }
           </div>
           {/* Sheet Music Actions */}
           <div className="flex gap-2">
-            {song.sheet_music_url ? (
-              onEditSheetMusic && (
-                <Button size="small" variant="secondary" onClick={() => onEditSheetMusic(song)}>
-                  악보 편집
-                </Button>
-              )
-            ) : (
-              onUpload && (
-                <Button size="small" variant="primary" onClick={() => onUpload(song)}>
-                  악보 업로드
-                </Button>
-              )
-            )}
+            {song.sheet_music_url
+              ? onEditSheetMusic && (
+                  <Button size="small" variant="secondary" onClick={() => onEditSheetMusic(song)}>
+                    악보 편집
+                  </Button>
+                )
+              : onUpload && (
+                  <Button size="small" variant="primary" onClick={() => onUpload(song)}>
+                    악보 업로드
+                  </Button>
+                )}
           </div>
         </div>
       </div>

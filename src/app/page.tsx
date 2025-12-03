@@ -20,9 +20,9 @@ export default function HomePage() {
     sort: 'worship_date_desc',
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: fetchContis is defined after useEffect
   useEffect(() => {
     fetchContis();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchContis = async () => {

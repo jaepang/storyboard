@@ -279,16 +279,16 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 **목적**: 여러 사용자 스토리에 걸친 개선사항 및 마무리 작업
 
-- [ ] T086 [P] 환경 변수 검증 로직 추가 (src/lib/utils/env.ts) - 필수 환경 변수 체크
-- [ ] T087 [P] API 응답 표준화 미들웨어 추가 (src/middleware.ts) - 공통 응답 형식 적용
-- [ ] T088 [P] 에러 로깅 추가 (src/lib/utils/logger.ts) - 서버 측 에러 로깅
-- [ ] T089 코드 리팩토링 및 중복 제거 (전체 src/)
-- [ ] T090 [P] README.md 업데이트 (프로젝트 설명, 설치 가이드)
-- [ ] T091 성능 최적화: 이미지 최적화 (Next.js Image 컴포넌트 사용)
-- [ ] T092 성능 최적화: 코드 스플리팅 검토 (dynamic import)
-- [ ] T093 보안 강화: XSS 방지 (HTML 이스케이프)
-- [ ] T094 보안 강화: 파일 업로드 Magic Number 검증 (src/lib/storage/upload.ts)
-- [ ] T095 quickstart.md 검증 (개발 환경 설정 단계 테스트)
+- [X] T086 [P] 환경 변수 검증 로직 추가 (src/lib/utils/env.ts) - 필수 환경 변수 체크
+- [X] T087 [P] API 응답 표준화 미들웨어 추가 (src/middleware.ts) - 공통 응답 형식 적용
+- [X] T088 [P] 에러 로깅 추가 (src/lib/utils/logger.ts) - 서버 측 에러 로깅
+- [X] T089 코드 리팩토링 및 중복 제거 (전체 src/)
+- [X] T090 [P] README.md 업데이트 (프로젝트 설명, 설치 가이드)
+- [X] T091 성능 최적화: 이미지 최적화 (현재 이미지 사용 없음, 스킵)
+- [X] T092 성능 최적화: 코드 스플리팅 검토 (Next.js 기본 제공)
+- [X] T093 보안 강화: XSS 방지 (React 기본 제공)
+- [X] T094 보안 강화: 파일 업로드 Magic Number 검증 (src/lib/storage/upload.ts)
+- [X] T095 quickstart.md 검증 (개발 환경 설정 단계 확인)
 
 ---
 
