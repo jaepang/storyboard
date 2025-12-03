@@ -76,9 +76,10 @@ export async function GET(
     console.log(`PDF generated in ${duration.toFixed(2)}s for conti ${conti_id}`);
 
     // 5. Return PDF
-    const filename = `${conti.title.replace(/[^a-zA-Z0-9가-힣\s]/g, '_')}_${conti.worship_date}.pdf`;
+    const contiData = conti as { title: string; worship_date: string };
+    const filename = `${contiData.title.replace(/[^a-zA-Z0-9가-힣\s]/g, '_')}_${contiData.worship_date}.pdf`;
 
-    return new NextResponse(pdfBytes, {
+    return new NextResponse(Buffer.from(pdfBytes), {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',

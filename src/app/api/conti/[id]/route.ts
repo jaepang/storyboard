@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { asUpdate } from '@/lib/supabase/types';
 import {
   createConflictResponse,
   createErrorResponse,
@@ -127,23 +128,19 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
 
     // 콘티 업데이트
-    const updateData: {
-      title?: string;
-      worship_date?: string;
-      notes?: string | null;
-      version: number;
-    } = {
+    const updates: Record<string, unknown> = {
       version: body.version + 1,
     };
 
-    if (body.title !== undefined) updateData.title = body.title;
-    if (body.worship_date !== undefined) updateData.worship_date = body.worship_date;
-    if (body.notes !== undefined) updateData.notes = body.notes || null;
+    if (body.title !== undefined) updates.title = body.title;
+    if (body.worship_date !== undefined) updates.worship_date = body.worship_date;
+    if (body.notes !== undefined) updates.notes = body.notes || null;
 
-    // @ts-expect-error - Supabase types work correctly at runtime
+    const updateData = asUpdate('contis', updates);
+
     const { data, error } = await supabase
       .from('contis')
-      .update(updateData)
+      .update(updateData as never)
       .eq('id', id)
       .eq('user_id', user.id)
       .eq('version', body.version)

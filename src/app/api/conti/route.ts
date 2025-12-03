@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { asInsert } from '@/lib/supabase/types';
 import {
   createErrorResponse,
   createUnauthorizedResponse,
@@ -163,15 +164,16 @@ export async function POST(request: NextRequest) {
     }
 
     // 콘티 생성
-    // @ts-expect-error - Supabase types work correctly at runtime
+    const insertData = asInsert('contis', {
+      user_id: user.id,
+      title: body.title,
+      worship_date: body.worship_date,
+      notes: body.notes || null,
+    });
+
     const { data, error } = await supabase
       .from('contis')
-      .insert({
-        user_id: user.id,
-        title: body.title,
-        worship_date: body.worship_date,
-        notes: body.notes || null,
-      })
+      .insert(insertData as never)
       .select()
       .single();
 

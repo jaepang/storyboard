@@ -8,8 +8,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Optimistic Locking', () => {
   it('should detect version mismatch', () => {
-    const currentVersion = 5;
-    const providedVersion = 3;
+    const currentVersion: number = 5;
+    const providedVersion: number = 3;
 
     const isConflict = currentVersion !== providedVersion;
 

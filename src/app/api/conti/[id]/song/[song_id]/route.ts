@@ -57,7 +57,7 @@ export async function PATCH(
       .from('conti_songs')
       .select('*, songs(*)')
       .eq('id', song_id)
-      .eq('contiId', contiId)
+      .eq('conti_id', contiId)
       .single();
 
     if (fetchError || !currentContiSong) {
@@ -106,10 +106,9 @@ export async function PATCH(
       if (body.composer !== undefined) songUpdateData.composer = body.composer || null;
       if (body.lyricist !== undefined) songUpdateData.lyricist = body.lyricist || null;
 
-      // @ts-expect-error - Supabase types work correctly at runtime
       const { error: songUpdateError } = await supabase
         .from('songs')
-        .update(songUpdateData)
+        .update(songUpdateData as never)
         .eq('id', currentSong.id);
 
       if (songUpdateError) {
@@ -142,12 +141,11 @@ export async function PATCH(
     if (body.time_signature !== undefined) contiSongUpdateData.time_signature = body.time_signature;
     if (body.notes !== undefined) contiSongUpdateData.notes = body.notes || null;
 
-    // @ts-expect-error - Supabase types work correctly at runtime
     const { data, error } = await supabase
       .from('conti_songs')
-      .update(contiSongUpdateData)
+      .update(contiSongUpdateData as never)
       .eq('id', song_id)
-      .eq('contiId', contiId)
+      .eq('conti_id', contiId)
       .eq('version', body.version)
       .select()
       .single();
@@ -206,7 +204,7 @@ export async function DELETE(
       .from('conti_songs')
       .select('song_id')
       .eq('id', song_id)
-      .eq('contiId', contiId)
+      .eq('conti_id', contiId)
       .single();
 
     if (fetchError || !contiSong) {
@@ -218,7 +216,7 @@ export async function DELETE(
       .from('conti_songs')
       .delete()
       .eq('id', song_id)
-      .eq('contiId', contiId);
+      .eq('conti_id', contiId);
 
     if (deleteContiSongError) {
       return createErrorResponse('DATABASE_ERROR', '곡 삭제에 실패했습니다.', {

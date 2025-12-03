@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { uploadSheetMusic, validateSheetMusicFile } from '@/lib/storage/upload';
 import { createClient } from '@/lib/supabase/server';
+import { asUpdate } from '@/lib/supabase/types';
 
 /**
  * POST /api/upload/sheet-music
@@ -71,8 +72,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // 권한 확인 (곡이 속한 콘티의 소유자인지 확인)
-    // biome-ignore lint/suspicious/noExplicitAny: Supabase nested query response has dynamic shape
-    if ((contiSong.contis as any).user_id !== user.id) {
+    const contiSongData = contiSong as { contis: { user_id: string } | { user_id: string }[] };
+    const contiData = Array.isArray(contiSongData.contis)
+      ? contiSongData.contis[0]
+      : contiSongData.contis;
+
+    if (contiData.user_id !== user.id) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
@@ -90,12 +95,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // conti_songs 테이블 업데이트 (sheet_music_url, sheet_music_pages)
+    const updateData = asUpdate('conti_songs', {
+      sheet_music_url: result.path, // Storage path를 저장 (공개 URL 아님)
+      sheet_music_pages: result.pageCount,
+    });
+
     const { error: updateError } = await supabase
       .from('conti_songs')
-      .update({
-        sheet_music_url: result.path, // Storage path를 저장 (공개 URL 아님)
-        sheet_music_pages: result.pageCount,
-      })
+      .update(updateData as never)
       .eq('id', songId);
 
     if (updateError) {

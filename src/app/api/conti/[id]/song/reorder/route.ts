@@ -49,7 +49,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const { data: currentSongs, error: fetchError } = await supabase
       .from('conti_songs')
       .select('id')
-      .eq('contiId', contiId);
+      .eq('conti_id', contiId);
 
     if (fetchError) {
       return createErrorResponse('DATABASE_ERROR', '곡 목록 조회에 실패했습니다.', {
@@ -66,13 +66,12 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // 각 곡의 order_index 업데이트
-    // @ts-expect-error - Supabase types work correctly at runtime
     const updatePromises = body.song_ids.map((songId, index) =>
       supabase
         .from('conti_songs')
-        .update({ order_index: index })
+        .update({ order_index: index } as never)
         .eq('id', songId)
-        .eq('contiId', contiId)
+        .eq('conti_id', contiId)
     );
 
     const results = await Promise.all(updatePromises);
@@ -89,7 +88,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const { data: updatedSongs, error: refetchError } = await supabase
       .from('conti_songs')
       .select('*')
-      .eq('contiId', contiId)
+      .eq('conti_id', contiId)
       .order('order_index', { ascending: true });
 
     if (refetchError) {

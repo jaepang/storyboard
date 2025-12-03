@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { asInsert } from '@/lib/supabase/types';
 import {
   createErrorResponse,
   createNotFoundResponse,
@@ -85,24 +86,26 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const { data: maxOrderData } = await supabase
       .from('conti_songs')
       .select('order_index')
-      .eq('contiId', contiId)
+      .eq('conti_id', contiId)
       .order('order_index', { ascending: false })
       .limit(1)
       .maybeSingle();
 
-    const nextOrderIndex = (maxOrderData?.order_index ?? -1) + 1;
+    const maxOrder = (maxOrderData as { order_index: number } | null)?.order_index ?? -1;
+    const nextOrderIndex = maxOrder + 1;
 
     // 1. 새로운 song 생성 (독립적 복사)
-    // @ts-expect-error - Supabase types work correctly at runtime
+    const newSongData = asInsert('songs', {
+      title: sourceSong.title,
+      composer: sourceSong.composer,
+      lyricist: sourceSong.lyricist,
+      original_key: sourceSong.original_key,
+      genre: sourceSong.genre,
+    });
+
     const { data: newSong, error: newSongError } = await supabase
       .from('songs')
-      .insert({
-        title: sourceSong.title,
-        composer: sourceSong.composer,
-        lyricist: sourceSong.lyricist,
-        original_key: sourceSong.original_key,
-        genre: sourceSong.genre,
-      })
+      .insert(newSongData as never)
       .select()
       .single();
 
@@ -113,7 +116,6 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
 
     // 2. 새로운 conti_song 생성 (모든 정보 복사)
-    // @ts-expect-error - Supabase types work correctly at runtime
     const sourceContiData = sourceContiSong as unknown as {
       title: string;
       composer: string | null;
@@ -127,23 +129,25 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       notes: string | null;
     };
 
+    const newContiSongData = asInsert('conti_songs', {
+      conti_id: contiId,
+      song_id: (newSong as { id: string }).id,
+      title: sourceContiData.title,
+      composer: sourceContiData.composer || undefined,
+      lyricist: sourceContiData.lyricist || undefined,
+      key_signature: sourceContiData.key_signature || undefined,
+      bpm_array: sourceContiData.bpm_array,
+      time_signature: sourceContiData.time_signature || undefined,
+      sheet_music_url: sourceContiData.sheet_music_url || undefined,
+      sheet_music_pages: sourceContiData.sheet_music_pages || undefined,
+      annotations: sourceContiData.annotations as never,
+      order_index: nextOrderIndex,
+      notes: sourceContiData.notes || undefined,
+    });
+
     const { data: newContiSong, error: newContiSongError } = await supabase
       .from('conti_songs')
-      .insert({
-        contiId,
-        song_id: (newSong as { id: string }).id,
-        title: sourceContiData.title,
-        composer: sourceContiData.composer,
-        lyricist: sourceContiData.lyricist,
-        key_signature: sourceContiData.key_signature,
-        bpm_array: sourceContiData.bpm_array,
-        time_signature: sourceContiData.time_signature,
-        sheet_music_url: sourceContiData.sheet_music_url,
-        sheet_music_pages: sourceContiData.sheet_music_pages,
-        annotations: sourceContiData.annotations,
-        order_index: nextOrderIndex,
-        notes: sourceContiData.notes,
-      })
+      .insert(newContiSongData as never)
       .select()
       .single();
 
