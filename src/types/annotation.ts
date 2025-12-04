@@ -1,60 +1,32 @@
 /**
- * 악보 주석 관련 타입 정의
+ * 악보 주석 관련 타입 정의 (Canvas 기반 벡터 드로잉)
  */
 
-// 주석 데이터 컨테이너
+// 주석 데이터 컨테이너 (전체 주석 데이터)
 export interface AnnotationData {
-  annotations: Annotation[];
+  annotations: Stroke[];
 }
 
-// 주석 타입
-export type Annotation = CircleAnnotation | ArrowAnnotation | LineAnnotation | TextAnnotation;
+// 편의를 위한 Annotation 타입 별칭
+export type Annotation = AnnotationData;
 
-// 기본 주석 속성
-export interface BaseAnnotation {
-  page: number; // 페이지 번호 (1부터 시작)
-  type: 'circle' | 'arrow' | 'line' | 'text';
-  color: string; // hex color (예: "#FF0000")
-  strokeWidth?: number; // 선 두께 (픽셀)
+// 좌표 포인트
+export interface Point {
+  x: number;
+  y: number;
 }
 
-// 원형 주석
-export interface CircleAnnotation extends BaseAnnotation {
-  type: 'circle';
-  x: number; // 0-1 정규화된 x 좌표
-  y: number; // 0-1 정규화된 y 좌표
-  radius: number; // 0-1 정규화된 반지름
+// 스트로크 (단일 그리기 작업)
+export interface Stroke {
+  id: string;
+  pageIndex: number; // 페이지 번호 (0부터 시작)
+  color: string; // hex color (예: "#000000")
+  strokeWidth: number; // 선 두께 (픽셀)
+  points: Point[]; // 스트로크의 포인트 배열
 }
 
-// 화살표 주석
-export interface ArrowAnnotation extends BaseAnnotation {
-  type: 'arrow';
-  x1: number; // 시작점 x (0-1 정규화)
-  y1: number; // 시작점 y (0-1 정규화)
-  x2: number; // 끝점 x (0-1 정규화)
-  y2: number; // 끝점 y (0-1 정규화)
-}
-
-// 직선 주석
-export interface LineAnnotation extends BaseAnnotation {
-  type: 'line';
-  x1: number; // 시작점 x (0-1 정규화)
-  y1: number; // 시작점 y (0-1 정규화)
-  x2: number; // 끝점 x (0-1 정규화)
-  y2: number; // 끝점 y (0-1 정규화)
-}
-
-// 텍스트 주석
-export interface TextAnnotation extends BaseAnnotation {
-  type: 'text';
-  x: number; // 0-1 정규화된 x 좌표
-  y: number; // 0-1 정규화된 y 좌표
-  text: string; // 텍스트 내용
-  fontSize: number; // 폰트 크기 (픽셀)
-}
-
-// 주석 저장 요청
+// 주석 저장 요청 (API용)
 export interface SaveAnnotationsRequest {
-  annotations: Annotation[];
-  version: number;
+  annotations: Stroke[];
+  version?: number;
 }

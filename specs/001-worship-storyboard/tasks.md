@@ -228,22 +228,22 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### API 구현 (US3)
 
-- [ ] T075 [P] [US3] PUT /api/conti/[conti_id]/song/[song_id]/annotations 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/[song_id]/annotations/route.ts) - 주석 저장
-- [ ] T076 [P] [US3] GET /api/conti/[conti_id]/song/[song_id]/annotations 엔드포인트 구현 (src/app/api/conti/[conti_id]/song/[song_id]/annotations/route.ts) - 주석 조회
+- [x] T075 [P] [US3] PUT /api/conti/[conti_id]/song/[song_id]/annotations 엔드포인트 구현 (src/app/api/conti/[id]/song/[song_id]/annotations/route.ts) - 주석 저장
+- [x] T076 [P] [US3] GET /api/conti/[conti_id]/song/[song_id]/annotations 엔드포인트 구현 (src/app/api/conti/[id]/song/[song_id]/annotations/route.ts) - 주석 조회
 
 ### UI 컴포넌트 (US3)
 
-- [ ] T077 [P] [US3] AnnotationCanvas 컴포넌트 생성 (src/components/editor/AnnotationCanvas.tsx) - Canvas 기반 펜 드로잉, 실시간 렌더링 (<50ms)
-- [ ] T078 [P] [US3] AnnotationToolbar 컴포넌트 생성 (src/components/editor/AnnotationToolbar.tsx) - 색상, 두께 선택 도구
-- [ ] T079 [US3] AnnotationLayer 컴포넌트 생성 (src/components/editor/AnnotationLayer.tsx) - 저장된 주석 표시
+- [x] T077 [P] [US3] AnnotationCanvas 컴포넌트 생성 (src/components/editor/AnnotationCanvas.tsx) - Canvas 기반 펜 드로잉, 실시간 렌더링 (<50ms)
+- [x] T078 [P] [US3] AnnotationToolbar 컴포넌트 생성 (src/components/editor/AnnotationToolbar.tsx) - 색상, 두께 선택 도구
+- [x] T079 [US3] AnnotationLayer 컴포넌트 생성 (src/components/editor/AnnotationLayer.tsx) - 저장된 주석 표시
 
 ### 페이지 확장 (US3)
 
-- [ ] T080 [US3] 곡 편집 페이지에 주석 작성 기능 추가 (src/app/conti/[id]/song/[song_id]/page.tsx) - AnnotationCanvas + AnnotationToolbar 통합
+- [x] T080 [US3] 곡 편집 페이지에 주석 작성 기능 추가 (src/app/conti/[id]/song/[song_id]/page.tsx) - AnnotationCanvas + AnnotationToolbar 통합
 
 ### PDF 생성 확장 (US3)
 
-- [ ] T081 [US3] PDF 주석 렌더링 통합 (src/lib/pdf/annotations.ts 확장) - 주석 데이터를 PDF 레이어로 변환
+- [x] T081 [US3] PDF 주석 렌더링 통합 (src/lib/pdf/generator.ts) - 주석 데이터를 PDF 벡터 그래픽으로 렌더링
 
 **Checkpoint**: User Story 3 완료 - 악보 주석 작성이 독립적으로 동작합니다
 

@@ -1,4 +1,5 @@
 import { PDFDocument, type PDFFont, type PDFPage, rgb, StandardFonts } from 'pdf-lib';
+import type { Annotation } from '@/types/annotation';
 import type { ContiWithSongs } from '@/types/conti';
 
 /**
@@ -271,10 +272,37 @@ export class PdfGenerator {
       y -= 220;
     }
 
-    // Annotations placeholder
+    // 주석 렌더링 (벡터 그래픽으로 PDF에 직접 그리기)
     if (includeAnnotations && song.annotations) {
-      // Annotations would be drawn as vector graphics over the sheet music
-      // This is a placeholder for the actual implementation
+      const annotations = song.annotations as unknown as Annotation;
+
+      // 현재 페이지의 주석만 필터링 (현재는 페이지 0만 지원)
+      const pageAnnotations = annotations.annotations.filter((stroke) => stroke.pageIndex === 0);
+
+      // 각 스트로크를 PDF에 그리기
+      for (const stroke of pageAnnotations) {
+        if (stroke.points.length < 2) continue;
+
+        // 색상 변환 (hex → RGB)
+        const hexColor = stroke.color.replace('#', '');
+        const r = Number.parseInt(hexColor.substring(0, 2), 16) / 255;
+        const g = Number.parseInt(hexColor.substring(2, 4), 16) / 255;
+        const b = Number.parseInt(hexColor.substring(4, 6), 16) / 255;
+
+        // 스트로크의 각 선분을 그리기
+        for (let i = 0; i < stroke.points.length - 1; i++) {
+          const start = stroke.points[i];
+          const end = stroke.points[i + 1];
+
+          page.drawLine({
+            start: { x: margin + start.x, y: y - start.y },
+            end: { x: margin + end.x, y: y - end.y },
+            thickness: stroke.strokeWidth,
+            color: rgb(r, g, b),
+            opacity: 1,
+          });
+        }
+      }
     }
   }
 
