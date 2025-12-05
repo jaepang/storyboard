@@ -12,19 +12,12 @@ import type { CreateContiRequest, GetContisParams } from '@/types/conti';
 
 /**
  * GET /api/conti - 콘티 목록 조회
+ *
+ * Public Read: 인증 없이 모든 콘티 조회 가능
  */
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
-
-    // 인증 확인
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return createUnauthorizedResponse();
-    }
 
     // 쿼리 파라미터 파싱
     const { searchParams } = new URL(request.url);
@@ -37,11 +30,9 @@ export async function GET(request: NextRequest) {
       date_to: searchParams.get('date_to') || undefined,
     };
 
-    // 기본 쿼리 구성
-    let query = supabase
-      .from('contis')
-      .select(
-        `
+    // 기본 쿼리 구성 (Public Read: user_id 필터 제거)
+    let query = supabase.from('contis').select(
+      `
         id,
         user_id,
         title,
@@ -52,9 +43,8 @@ export async function GET(request: NextRequest) {
         updated_at,
         conti_songs (count)
       `,
-        { count: 'exact' }
-      )
-      .eq('user_id', user.id);
+      { count: 'exact' }
+    );
 
     // 검색 필터 (콘티 제목 또는 곡 제목)
     if (params.search) {

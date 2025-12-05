@@ -4,7 +4,6 @@ import { createClient } from '@/lib/supabase/server';
 import {
   createErrorResponse,
   createNotFoundResponse,
-  createUnauthorizedResponse,
 } from '@/lib/utils/error';
 import type { ContiWithSongs } from '@/types/conti';
 import type { ContiSong } from '@/types/song';
@@ -13,6 +12,7 @@ import type { ContiSong } from '@/types/song';
  * GET /api/pdf/[conti_id] - Generate and download PDF for a conti
  *
  * Performance Target: 1-4 seconds
+ * Public Read: 인증 없이 PDF 다운로드 가능
  */
 export async function GET(
   _request: NextRequest,
@@ -24,22 +24,11 @@ export async function GET(
     const { conti_id } = await params;
     const supabase = await createClient();
 
-    // 1. Authentication check
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      return createUnauthorizedResponse();
-    }
-
-    // 2. Fetch conti with songs
+    // 1. Fetch conti with songs (Public Read: user_id 필터 제거)
     const { data: conti, error: contiError } = await supabase
       .from('contis')
       .select('*')
       .eq('id', conti_id)
-      .eq('user_id', user.id)
       .single();
 
     if (contiError || !conti) {

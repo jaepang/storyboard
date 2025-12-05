@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/common/Button';
 import ContiList from '@/components/conti/ContiList';
 import SearchBar from '@/components/conti/SearchBar';
+import { useAuth } from '@/hooks/useAuth';
 import type { ContiListItem, GetContisParams } from '@/types/conti';
 
 export default function HomePage() {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [contis, setContis] = useState<ContiListItem[]>([]);
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,11 +102,17 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">찬양 콘티</h1>
-            <p className="text-gray-600 mt-1">주간 예배 찬양 콘티를 관리하세요</p>
+            <p className="text-gray-600 mt-1">
+              {isAuthenticated
+                ? '주간 예배 찬양 콘티를 관리하세요'
+                : '콘티를 조회하고 PDF를 다운로드하세요'}
+            </p>
           </div>
-          <Button variant="primary" onClick={handleCreateNew}>
-            새 콘티 생성
-          </Button>
+          {isAuthenticated && (
+            <Button variant="primary" onClick={handleCreateNew}>
+              새 콘티 생성
+            </Button>
+          )}
         </div>
 
         {/* Search Bar */}

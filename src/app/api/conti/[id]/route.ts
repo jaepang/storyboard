@@ -15,27 +15,19 @@ import type { ContiSong } from '@/types/song';
 
 /**
  * GET /api/conti/[id] - 단일 콘티 조회 (곡 목록 포함)
+ *
+ * Public Read: 인증 없이 콘티 조회 가능
  */
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const supabase = await createClient();
 
-    // 인증 확인
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return createUnauthorizedResponse();
-    }
-
-    // 콘티 조회
+    // 콘티 조회 (Public Read: user_id 필터 제거)
     const { data: conti, error: contiError } = await supabase
       .from('contis')
       .select('*')
       .eq('id', id)
-      .eq('user_id', user.id)
       .single();
 
     if (contiError || !conti) {
