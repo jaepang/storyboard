@@ -292,6 +292,47 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ---
 
+## Phase 10: User Story 0 - 로그인 및 인증 (Priority: P0)
+
+**Goal**: 찬양 인도자가 이메일/비밀번호로 회원가입 및 로그인하여 콘티를 생성/수정/삭제할 수 있다. **반주자는 로그인 없이 콘티 조회 및 PDF 다운로드가 가능**하다. Supabase Auth와 RLS를 활용하여 읽기는 public, 쓰기는 인증 필요로 구현한다.
+
+**Independent Test**: 로그인 없이 콘티 목록을 조회할 수 있고, 회원가입 후 로그인하여 콘티를 생성할 수 있으면 독립적으로 테스트 완료된다.
+
+### RLS 정책 수정 (Public Read)
+
+- [ ] T096 데이터베이스 마이그레이션: RLS 정책 수정 - Public Read (specs/001-worship-storyboard/migrations/006_update_rls_public_read.sql) - SELECT는 모두 허용, INSERT/UPDATE/DELETE는 인증 필요
+
+### Supabase Auth 패키지 설치
+
+- [ ] T097 Supabase Auth UI 패키지 설치 (package.json) - `@supabase/auth-ui-react`, `@supabase/auth-ui-shared`
+
+### 인증 페이지 생성
+
+- [ ] T098 [P] [US0] 로그인 페이지 생성 (src/app/auth/login/page.tsx) - Supabase Auth UI 사용, 이메일/비밀번호 로그인
+- [ ] T099 [P] [US0] 회원가입 페이지 생성 (src/app/auth/signup/page.tsx) - Supabase Auth UI 사용, 회원가입 폼
+- [ ] T100 [US0] 로그아웃 버튼 컴포넌트 생성 (src/components/auth/LogoutButton.tsx) - 헤더나 네비게이션에 추가 가능
+
+### API 엔드포인트 수정 (Public Read)
+
+- [ ] T101 [US0] GET /api/conti 인증 제거 (src/app/api/conti/route.ts) - auth.getUser() 체크 제거, 누구나 조회 가능
+- [ ] T102 [US0] GET /api/conti/[id] 인증 제거 (src/app/api/conti/[id]/route.ts) - 누구나 조회 가능
+- [ ] T103 [US0] GET /api/pdf/[conti_id] 인증 제거 (src/app/api/pdf/[conti_id]/route.ts) - 누구나 PDF 다운로드 가능
+
+### 인증 상태 관리 및 UI 조건부 표시
+
+- [ ] T104 [US0] 인증 상태 확인 훅 생성 (src/hooks/useAuth.ts) - 현재 로그인 사용자 정보 제공
+- [ ] T105 [US0] 홈 페이지 UI 조건부 표시 (src/app/page.tsx) - "콘티 생성" 버튼은 로그인 시에만 표시
+- [ ] T106 [US0] 헤더/네비게이션 컴포넌트 생성 (src/components/common/Header.tsx) - 로그인/로그아웃 버튼, 로그인 상태 표시
+
+### 선택적 개선사항
+
+- [ ] T107 [US0] Next.js Middleware로 쓰기 작업 인증 가드 추가 (middleware.ts) - /conti/new, /conti/[id]/edit 등 보호
+- [ ] T108 [US0] 인증 에러 처리 개선 (src/lib/utils/auth-error.ts) - Supabase Auth 에러 메시지 한글화
+
+**Checkpoint**: User Story 0 완료 - 모든 사용자가 로그인/회원가입 후 콘티 시스템을 사용할 수 있습니다
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
@@ -408,7 +449,7 @@ Task: "곡 복사 단위 테스트 (tests/unit/song-copy.test.ts)"
 
 ## Summary
 
-**총 태스크 수**: 95개
+**총 태스크 수**: 104개
 
 **사용자 스토리별 태스크 수**:
 - Setup (Phase 1): 8개
@@ -420,6 +461,7 @@ Task: "곡 복사 단위 테스트 (tests/unit/song-copy.test.ts)"
 - User Story 3 (P3): 7개
 - User Story 4 (P4): 4개
 - Polish (Phase 9): 10개
+- User Story 0 (P0 - 인증): 9개
 
 **병렬 실행 기회**:
 - Setup 단계: 7개 태스크 병렬 가능
@@ -430,6 +472,7 @@ Task: "곡 복사 단위 테스트 (tests/unit/song-copy.test.ts)"
 **제안 MVP 범위**: User Stories 1, 5, 6 (P1) - 콘티 생성, 검색, PDF 다운로드
 
 **독립 테스트 기준**:
+- US0: 회원가입 및 로그인 후 콘티 목록 페이지 접근 가능
 - US1: 콘티 생성 및 곡 편집 후 콘티 목록에서 조회 가능
 - US5: 검색 필터로 원하는 콘티 찾기 가능
 - US6: PDF 다운로드 시 모든 정보 포함 확인

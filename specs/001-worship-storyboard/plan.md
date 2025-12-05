@@ -75,11 +75,15 @@ storyboard/
 │   │   │   ├── song/         # 곡 CRUD
 │   │   │   ├── upload/       # 파일 업로드
 │   │   │   └── pdf/          # PDF 생성
+│   │   ├── auth/              # 인증 페이지
+│   │   │   ├── login/        # 로그인
+│   │   │   └── signup/       # 회원가입
 │   │   ├── conti/            # 콘티 페이지
 │   │   │   ├── [id]/        # 콘티 상세/편집
 │   │   │   └── new/          # 콘티 생성
 │   │   ├── layout.tsx        # Root layout
-│   │   └── page.tsx          # 홈 (콘티 목록)
+│   │   ├── page.tsx          # 홈 (콘티 목록)
+│   │   └── middleware.ts     # 인증 미들웨어 (옵션)
 │   ├── components/            # React 컴포넌트
 │   │   ├── conti/            # 콘티 관련 컴포넌트
 │   │   ├── song/             # 곡 편집 컴포넌트
