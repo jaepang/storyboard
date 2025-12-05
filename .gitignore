@@ -46,6 +46,9 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 
+# Supabase
+supabase/.temp/
+
 # Misc
 *.tmp
 .cache/
