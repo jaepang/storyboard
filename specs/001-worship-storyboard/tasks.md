@@ -257,19 +257,19 @@ Next.js 15 App Router 기반 풀스택 프로젝트:
 
 ### 유틸리티 (US4)
 
-- [ ] T082 [P] [US4] 유튜브 재생목록 파싱 유틸리티 생성 (src/lib/utils/youtube.ts) - 재생목록 URL에서 영상 개수 추출
+- [X] T082 [P] [US4] 유튜브 재생목록 파싱 유틸리티 생성 (src/lib/utils/youtube.ts) - 재생목록 URL에서 영상 개수 추출
 
 ### API 구현 (US4)
 
-- [ ] T083 [US4] POST /api/youtube/playlist 엔드포인트 구현 (src/app/api/youtube/playlist/route.ts) - 영상 개수 추출 및 초기 곡 목록 생성
+- [X] T083 [US4] POST /api/youtube/playlist 엔드포인트 구현 (src/app/api/youtube/playlist/route.ts) - 영상 개수 추출 및 초기 곡 목록 생성
 
 ### UI 컴포넌트 (US4)
 
-- [ ] T084 [P] [US4] YoutubePlaylistInput 컴포넌트 생성 (src/components/conti/YoutubePlaylistInput.tsx) - URL 입력 폼
+- [X] T084 [P] [US4] YoutubePlaylistInput 컴포넌트 생성 (src/components/conti/YoutubePlaylistInput.tsx) - URL 입력 폼
 
 ### 페이지 확장 (US4)
 
-- [ ] T085 [US4] 콘티 생성 페이지에 유튜브 연동 추가 (src/app/conti/new/page.tsx) - YoutubePlaylistInput 통합
+- [X] T085 [US4] 콘티 생성 페이지에 유튜브 연동 추가 (src/app/conti/new/page.tsx) - YoutubePlaylistInput 통합
 
 **Checkpoint**: User Story 4 완료 - 유튜브 재생목록 연동이 독립적으로 동작합니다
 

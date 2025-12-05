@@ -10,7 +10,13 @@
       "Bash(git log -5 --format='%s')",
       "Bash(git add specs/001-worship-storyboard/spec.md)",
       "Bash(git add specs/001-worship-storyboard/plan.md specs/001-worship-storyboard/tasks.md .claude/settings.local.json)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nchore: /speckit.analyze 실행 후 관련 문서 업데이트\n\n변경사항:\n\n1. plan.md - 프로젝트 구조 업데이트\n   - 인증 페이지 디렉토리 추가 (app/auth/login, app/auth/signup)\n   - 인증 미들웨어 추가 (app/middleware.ts)\n\n2. tasks.md - Phase 10 (User Story 0) 추가\n   - 로그인 및 인증 관련 태스크 9개 추가 (T096-T108)\n   - 총 태스크 수: 95개 → 104개\n   - RLS 정책 수정, Auth UI 패키지 설치, 인증 페이지 생성 등\n   - US0 독립 테스트 기준 추가\n\n3. .claude/settings.local.json\n   - 자동 승인 명령어 목록 업데이트\n   - check-prerequisites.sh, git log, git add 명령어 추가\n\n참고:\n- spec.md의 User Story 0 (Priority P4) 추가에 따른 동기화\n- 인증 기능은 MVP 이후 추가 예정 (Phase 10)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nchore: /speckit.analyze 실행 후 관련 문서 업데이트\n\n변경사항:\n\n1. plan.md - 프로젝트 구조 업데이트\n   - 인증 페이지 디렉토리 추가 (app/auth/login, app/auth/signup)\n   - 인증 미들웨어 추가 (app/middleware.ts)\n\n2. tasks.md - Phase 10 (User Story 0) 추가\n   - 로그인 및 인증 관련 태스크 9개 추가 (T096-T108)\n   - 총 태스크 수: 95개 → 104개\n   - RLS 정책 수정, Auth UI 패키지 설치, 인증 페이지 생성 등\n   - US0 독립 테스트 기준 추가\n\n3. .claude/settings.local.json\n   - 자동 승인 명령어 목록 업데이트\n   - check-prerequisites.sh, git log, git add 명령어 추가\n\n참고:\n- spec.md의 User Story 0 (Priority P4) 추가에 따른 동기화\n- 인증 기능은 MVP 이후 추가 예정 (Phase 10)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(if [ -d \"/Users/jaepang/code/storyboard/specs/001-worship-storyboard/checklists\" ])",
+      "Bash(then echo \"EXISTS\")",
+      "Bash(else echo \"NOT_EXISTS\")",
+      "Bash(fi)",
+      "Bash(pnpm tsc --noEmit)",
+      "Bash(pnpm run lint --fix)"
     ],
     "deny": [],
     "ask": []
