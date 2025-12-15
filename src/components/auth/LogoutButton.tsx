@@ -9,7 +9,7 @@ interface LogoutButtonProps {
   /**
    * 버튼 스타일 variant
    */
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
   /**
    * 버튼 크기
    */
@@ -45,6 +45,7 @@ export default function LogoutButton({ variant = 'secondary', className = '' }: 
     <Button
       type="button"
       variant={variant}
+      size="small"
       onClick={handleLogout}
       disabled={isLoading}
       className={className}
