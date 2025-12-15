@@ -3,20 +3,6 @@
 import { useState } from 'react';
 import Button from '@/components/common/Button';
 
-/**
- * SheetMusicEditor 컴포넌트
- *
- * 업로드된 악보 파일의 각 페이지를 미리보기하고 편집합니다.
- *
- * 기능:
- * - 악보 페이지 미리보기 (react-pdf 사용 예정)
- * - 페이지별 편집 컨트롤
- * - 페이지 순서 변경
- * - 페이지 삭제
- *
- * Note: react-pdf는 Phase 6에서 추가 예정
- */
-
 export interface PageSettings {
   pageNumber: number;
   scale: number;
@@ -84,23 +70,22 @@ export default function SheetMusicEditor({
   const currentPageSettings = pages.find((p) => p.pageNumber === currentPage);
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-5">
       {/* 헤더 */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900">악보 편집</h3>
+        <h3 className="text-lg font-semibold text-white">악보 편집</h3>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-white/60">
             페이지 {currentPage} / {pageCount}
           </span>
         </div>
       </div>
 
       {/* 악보 미리보기 영역 */}
-      <div className="border border-gray-300 rounded-lg bg-gray-50 p-4">
-        <div className="aspect-[1/1.414] bg-white rounded shadow-sm flex items-center justify-center">
-          {/* TODO: react-pdf를 사용한 실제 PDF 미리보기 */}
+      <div className="glass-light rounded-xl p-4">
+        <div className="aspect-[1/1.414] rounded-lg bg-white/5 flex items-center justify-center">
           <div className="text-center space-y-4">
-            <div className="text-gray-400">
+            <div className="text-white/30">
               <svg
                 className="mx-auto h-16 w-16"
                 fill="none"
@@ -117,17 +102,17 @@ export default function SheetMusicEditor({
               </svg>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-900">페이지 {currentPage}</p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-sm font-medium text-white">페이지 {currentPage}</p>
+              <p className="text-xs text-white/50 mt-1">
                 크기: {(currentPageSettings?.scale || 1.0) * 100}%
               </p>
-              <p className="text-xs text-gray-500">회전: {currentPageSettings?.rotation || 0}°</p>
+              <p className="text-xs text-white/50">회전: {currentPageSettings?.rotation || 0}°</p>
             </div>
             <a
               href={sheetMusicUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-blue-600 hover:underline"
+              className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
             >
               새 탭에서 열기
             </a>
@@ -140,17 +125,19 @@ export default function SheetMusicEditor({
         <Button
           type="button"
           variant="secondary"
+          size="small"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
           이전
         </Button>
-        <span className="text-sm text-gray-600">
+        <span className="text-sm text-white/70">
           {currentPage} / {pageCount}
         </span>
         <Button
           type="button"
           variant="secondary"
+          size="small"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === pageCount}
         >
@@ -159,12 +146,12 @@ export default function SheetMusicEditor({
       </div>
 
       {/* 페이지 편집 컨트롤 */}
-      <div className="border border-gray-200 rounded-lg p-4 space-y-4">
-        <h4 className="text-sm font-medium text-gray-900">페이지 설정</h4>
+      <div className="glass-light rounded-xl p-4 space-y-4">
+        <h4 className="text-sm font-medium text-white">페이지 설정</h4>
 
         {/* 크기 조절 */}
         <div className="space-y-2">
-          <label htmlFor="scale" className="block text-sm text-gray-700">
+          <label htmlFor="scale" className="block text-sm text-white/70">
             크기: {((currentPageSettings?.scale || 1.0) * 100).toFixed(0)}%
           </label>
           <div className="flex items-center gap-3">
@@ -176,11 +163,12 @@ export default function SheetMusicEditor({
               step="10"
               value={(currentPageSettings?.scale || 1.0) * 100}
               onChange={(e) => handleScaleChange(currentPage, Number(e.target.value) / 100)}
-              className="flex-1"
+              className="flex-1 accent-indigo-400"
             />
             <Button
               type="button"
               variant="secondary"
+              size="small"
               onClick={() => handleScaleChange(currentPage, 1.0)}
             >
               초기화
@@ -190,31 +178,34 @@ export default function SheetMusicEditor({
 
         {/* 회전 */}
         <div className="space-y-2">
-          <label className="block text-sm text-gray-700">
+          <label className="block text-sm text-white/70">
             회전: {currentPageSettings?.rotation || 0}°
           </label>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button
               type="button"
               variant="secondary"
+              size="small"
               onClick={() =>
                 handleRotationChange(currentPage, (currentPageSettings?.rotation || 0) - 90)
               }
             >
-              ↶ 왼쪽 90°
+              왼쪽 90°
             </Button>
             <Button
               type="button"
               variant="secondary"
+              size="small"
               onClick={() =>
                 handleRotationChange(currentPage, (currentPageSettings?.rotation || 0) + 90)
               }
             >
-              ↷ 오른쪽 90°
+              오른쪽 90°
             </Button>
             <Button
               type="button"
               variant="secondary"
+              size="small"
               onClick={() => handleRotationChange(currentPage, 0)}
             >
               초기화
@@ -224,7 +215,7 @@ export default function SheetMusicEditor({
       </div>
 
       {/* 액션 버튼 */}
-      <div className="flex gap-3 justify-end border-t border-gray-200 pt-4">
+      <div className="flex gap-3 justify-end pt-2 border-t border-white/10">
         {onCancel && (
           <Button type="button" variant="secondary" onClick={onCancel} disabled={isLoading}>
             취소

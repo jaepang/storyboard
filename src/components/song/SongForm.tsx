@@ -110,7 +110,7 @@ export default function SongForm({
         disabled={isLoading}
       />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Input
           label="작곡가"
           type="text"
@@ -130,7 +130,7 @@ export default function SongForm({
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Input
           label="조성"
           type="text"
@@ -163,7 +163,7 @@ export default function SongForm({
       </div>
 
       <div className="w-full">
-        <label htmlFor="song-notes" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="song-notes" className="block text-sm font-medium text-white/80 mb-2">
           곡 메모 (선택사항)
         </label>
         <textarea
@@ -173,11 +173,11 @@ export default function SongForm({
           placeholder="예: 후렴 2번 반복"
           disabled={isLoading}
           rows={3}
-          className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-base transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="block w-full rounded-xl px-4 py-2.5 text-base glass-input disabled:opacity-50 disabled:cursor-not-allowed resize-none"
         />
       </div>
 
-      <div className="flex gap-3 justify-end">
+      <div className="flex gap-3 justify-end pt-2">
         {onCancel && (
           <Button type="button" variant="secondary" onClick={onCancel} disabled={isLoading}>
             취소

@@ -96,13 +96,13 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4 space-y-6">
+    <div className="h-full overflow-auto p-4 md:p-6">
+      <div className="max-w-7xl mx-auto space-y-5">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">찬양 콘티</h1>
-            <p className="text-gray-600 mt-1">
+            <h1 className="text-2xl md:text-3xl font-bold text-white">찬양 콘티</h1>
+            <p className="text-white/60 mt-1 text-sm md:text-base">
               {isAuthenticated
                 ? '주간 예배 찬양 콘티를 관리하세요'
                 : '콘티를 조회하고 PDF를 다운로드하세요'}

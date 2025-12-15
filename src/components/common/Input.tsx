@@ -17,16 +17,16 @@ export default function Input({
   const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
   const baseStyles =
-    'block w-full rounded-lg border px-3 py-2 text-base transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    'block w-full rounded-xl px-4 py-2.5 text-base glass-input disabled:opacity-50 disabled:cursor-not-allowed';
 
   const stateStyles = error
-    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500';
+    ? 'border-red-400/50 focus:border-red-400 focus:ring-red-400/30'
+    : '';
 
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={inputId} className="block text-sm font-medium text-white/80 mb-2">
           {label}
         </label>
       )}
@@ -38,12 +38,12 @@ export default function Input({
         {...props}
       />
       {error && (
-        <p id={`${inputId}-error`} className="mt-1 text-sm text-red-600">
+        <p id={`${inputId}-error`} className="mt-2 text-sm text-red-400">
           {error}
         </p>
       )}
       {!error && helperText && (
-        <p id={`${inputId}-helper`} className="mt-1 text-sm text-gray-500">
+        <p id={`${inputId}-helper`} className="mt-2 text-sm text-white/50">
           {helperText}
         </p>
       )}

@@ -70,7 +70,7 @@ export default function ContiForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <Input
         label="콘티 제목"
         type="text"
@@ -93,7 +93,7 @@ export default function ContiForm({
       />
 
       <div className="w-full">
-        <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="notes" className="block text-sm font-medium text-white/80 mb-2">
           메모 (선택사항)
         </label>
         <textarea
@@ -102,12 +102,12 @@ export default function ContiForm({
           onChange={(e) => setNotes(e.target.value)}
           placeholder="콘티 전체에 대한 메모를 입력하세요..."
           disabled={isLoading}
-          rows={4}
-          className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-base transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          rows={3}
+          className="block w-full rounded-xl px-4 py-2.5 text-base glass-input disabled:opacity-50 disabled:cursor-not-allowed resize-none"
         />
       </div>
 
-      <div className="flex gap-3 justify-end">
+      <div className="flex gap-3 justify-end pt-2">
         {onCancel && (
           <Button type="button" variant="secondary" onClick={onCancel} disabled={isLoading}>
             취소

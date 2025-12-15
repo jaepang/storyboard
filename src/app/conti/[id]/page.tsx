@@ -235,7 +235,6 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
     const { pendingData, endpoint } = conflictInfo;
 
     try {
-      // Force update by incrementing version
       const updatedData = {
         ...pendingData,
         version: (pendingData as { version: number }).version + 1,
@@ -266,7 +265,6 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
   };
 
   const handleUploadSuccess = async (_songId: string, _url: string, _pageCount: number) => {
-    // 업로드 성공 시 곡 목록 새로고침
     await fetchConti();
     setUploadingSong(null);
   };
@@ -282,14 +280,13 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
   };
 
   const handleSheetMusicSave = async (_song: ContiSong, pages: PageSettings[]) => {
-    // TODO: 페이지 설정을 API로 저장 (Phase 7에서 구현 예정)
     console.log('Saving page settings:', pages);
     setEditingSheetMusic(null);
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="h-full flex items-center justify-center">
         <Loading size="large" text="콘티 불러오는 중..." />
       </div>
     );
@@ -297,7 +294,7 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
 
   if (error && !conti) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="h-full flex items-center justify-center p-4">
         <div className="max-w-md w-full">
           <ErrorMessage title="콘티 조회 실패" message={error} onRetry={fetchConti} />
         </div>
@@ -310,15 +307,14 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 space-y-6">
-        {/* Error Display */}
+    <div className="h-full overflow-auto p-4 md:p-6">
+      <div className="max-w-5xl mx-auto space-y-5">
         {error && <ErrorMessage message={error} onRetry={() => setError(null)} />}
 
         {/* Conti Info Section */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">콘티 편집</h1>
+        <div className="glass-card p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+            <h1 className="text-xl md:text-2xl font-bold text-white">콘티 편집</h1>
             <div className="flex gap-2">
               <PdfDownloadButton contiId={conti.id} contiTitle={conti.title} />
               <Button variant="secondary" onClick={() => router.back()}>
@@ -334,9 +330,9 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
         <ContiPreview contiId={conti.id} />
 
         {/* Songs Section */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">곡 목록</h2>
+        <div className="glass-card p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+            <h2 className="text-lg md:text-xl font-bold text-white">곡 목록</h2>
             <Button
               variant="primary"
               onClick={() => setIsAddingSong(true)}
@@ -346,10 +342,9 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
             </Button>
           </div>
 
-          {/* Add Song Form */}
           {isAddingSong && (
-            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <h3 className="font-semibold mb-4">새 곡 추가</h3>
+            <div className="mb-5 p-4 rounded-xl glass-light">
+              <h3 className="font-semibold text-white mb-4">새 곡 추가</h3>
               <SongForm
                 onSubmit={handleAddSong}
                 onCancel={() => setIsAddingSong(false)}
@@ -358,10 +353,9 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
             </div>
           )}
 
-          {/* Edit Song Form */}
           {editingSong && (
-            <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold mb-4">곡 수정</h3>
+            <div className="mb-5 p-4 rounded-xl bg-indigo-500/10 border border-indigo-400/30">
+              <h3 className="font-semibold text-white mb-4">곡 수정</h3>
               <SongForm
                 initialData={editingSong}
                 onSubmit={handleEditSong}
@@ -371,7 +365,6 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
             </div>
           )}
 
-          {/* Song List */}
           <SongList
             songs={conti.songs}
             onReorder={handleReorderSongs}
@@ -383,10 +376,9 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
           />
         </div>
 
-        {/* Sheet Music Upload Section */}
         {uploadingSong && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
+          <div className="glass-card p-5">
+            <h2 className="text-lg md:text-xl font-bold text-white mb-4">
               악보 업로드: {uploadingSong.title}
             </h2>
             <SheetMusicUploader
@@ -404,10 +396,9 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
           </div>
         )}
 
-        {/* Sheet Music Editor Section */}
         {editingSheetMusic?.sheet_music_url && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
+          <div className="glass-card p-5">
+            <h2 className="text-lg md:text-xl font-bold text-white mb-4">
               악보 편집: {editingSheetMusic.title}
             </h2>
             <SheetMusicEditor
@@ -420,7 +411,6 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
         )}
       </div>
 
-      {/* Conflict Modal */}
       {conflictInfo && (
         <ConflictModal
           isOpen={true}

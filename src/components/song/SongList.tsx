@@ -46,13 +46,13 @@ function SongItem({ song, onEdit, onDelete, onCopy, onUpload, onEditSheetMusic }
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-white border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
+      className="glass-light rounded-xl p-4 border border-white/10 hover:border-indigo-400/30 transition-colors"
     >
       <div className="flex items-start gap-4">
         {/* Drag Handle */}
         <button
           type="button"
-          className="mt-1 cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600"
+          className="mt-1 cursor-grab active:cursor-grabbing text-white/40 hover:text-white/60 transition-colors"
           {...attributes}
           {...listeners}
         >
@@ -70,14 +70,14 @@ function SongItem({ song, onEdit, onDelete, onCopy, onUpload, onEditSheetMusic }
         {/* Song Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">{song.title}</h3>
+            <h3 className="text-lg font-semibold text-white truncate">{song.title}</h3>
             {song.sheet_music_url && (
-              <span className="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded">
+              <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium text-emerald-300 bg-emerald-500/20 border border-emerald-400/30 rounded-full">
                 악보 있음
               </span>
             )}
           </div>
-          <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
+          <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-white/60">
             {song.composer && <span>작곡: {song.composer}</span>}
             {song.lyricist && <span>작사: {song.lyricist}</span>}
             {song.key_signature && <span>조성: {song.key_signature}</span>}
@@ -87,7 +87,7 @@ function SongItem({ song, onEdit, onDelete, onCopy, onUpload, onEditSheetMusic }
             {song.time_signature && <span>박자: {song.time_signature}</span>}
             {song.sheet_music_pages && <span>악보 페이지: {song.sheet_music_pages}p</span>}
           </div>
-          {song.notes && <p className="mt-2 text-sm text-gray-500">{song.notes}</p>}
+          {song.notes && <p className="mt-2 text-sm text-white/50">{song.notes}</p>}
         </div>
 
         {/* Actions */}
@@ -180,9 +180,9 @@ export default function SongList({
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-500">
+      <div className="text-center py-12 text-white/50">
         <p>아직 추가된 곡이 없습니다.</p>
-        <p className="text-sm mt-2">곡 추가 버튼을 클릭하여 곡을 추가하세요.</p>
+        <p className="text-sm mt-2 text-white/40">곡 추가 버튼을 클릭하여 곡을 추가하세요.</p>
       </div>
     );
   }

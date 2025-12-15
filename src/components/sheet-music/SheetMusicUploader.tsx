@@ -4,18 +4,6 @@ import { useRef, useState } from 'react';
 import Button from '@/components/common/Button';
 import ErrorMessage from '@/components/common/ErrorMessage';
 
-/**
- * SheetMusicUploader 컴포넌트
- *
- * 악보 파일(PDF)을 업로드하는 UI 컴포넌트입니다.
- *
- * 기능:
- * - 파일 선택 (드래그 앤 드롭, 클릭)
- * - 파일 검증 (최대 10MB, 20페이지)
- * - 업로드 진행 상태 표시
- * - 업로드 성공/실패 피드백
- */
-
 export interface SheetMusicUploaderProps {
   songId: string;
   onUploadSuccess: (url: string, pageCount: number) => void;
@@ -46,13 +34,11 @@ export default function SheetMusicUploader({
   const handleFileSelect = (selectedFile: File | null) => {
     if (!selectedFile) return;
 
-    // 파일 타입 검증
     if (selectedFile.type !== 'application/pdf') {
       setError('PDF 파일만 업로드할 수 있습니다.');
       return;
     }
 
-    // 파일 크기 검증 (10MB)
     const maxSize = 10 * 1024 * 1024;
     if (selectedFile.size > maxSize) {
       setError('파일 크기는 최대 10MB까지 허용됩니다.');
@@ -112,7 +98,6 @@ export default function SheetMusicUploader({
         throw new Error(data.error || '업로드에 실패했습니다.');
       }
 
-      // 업로드 성공
       if (data.url && data.pageCount !== undefined) {
         onUploadSuccess(data.url, data.pageCount);
         setFile(null);
@@ -146,8 +131,8 @@ export default function SheetMusicUploader({
         onDragLeave={handleDragLeave}
         onClick={() => !disabled && !isUploading && fileInputRef.current?.click()}
         className={`
-          border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
-          ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
+          border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all
+          ${isDragging ? 'border-indigo-400 bg-indigo-500/10' : 'border-white/20 hover:border-white/30'}
           ${disabled || isUploading ? 'opacity-50 cursor-not-allowed' : ''}
         `}
       >
@@ -160,9 +145,9 @@ export default function SheetMusicUploader({
           className="hidden"
         />
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <svg
-            className="mx-auto h-12 w-12 text-gray-400"
+            className="mx-auto h-12 w-12 text-white/40"
             stroke="currentColor"
             fill="none"
             viewBox="0 0 48 48"
@@ -179,16 +164,16 @@ export default function SheetMusicUploader({
 
           {file ? (
             <div className="text-sm">
-              <p className="text-gray-900 font-medium">{file.name}</p>
-              <p className="text-gray-500">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+              <p className="text-white font-medium">{file.name}</p>
+              <p className="text-white/50">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
             </div>
           ) : (
             <div className="text-sm">
-              <p className="text-gray-600">
-                <span className="font-semibold text-blue-600">클릭</span>하거나 파일을{' '}
+              <p className="text-white/70">
+                <span className="font-semibold text-indigo-400">클릭</span>하거나 파일을{' '}
                 <span className="font-semibold">드래그</span>하여 업로드
               </p>
-              <p className="text-gray-500 text-xs mt-1">PDF 파일만 가능 (최대 10MB, 20페이지)</p>
+              <p className="text-white/40 text-xs mt-1">PDF 파일만 가능 (최대 10MB, 20페이지)</p>
             </div>
           )}
         </div>

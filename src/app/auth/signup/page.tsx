@@ -4,20 +4,15 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Loading from '@/components/common/Loading';
 import { createClient } from '@/lib/supabase/client';
 
-/**
- * 회원가입 페이지
- *
- * Supabase Auth UI를 사용하여 이메일/비밀번호 회원가입 제공
- */
 export default function SignupPage() {
   const router = useRouter();
   const supabase = createClient();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 이미 로그인된 경우 홈으로 리다이렉트
     const checkUser = async () => {
       const {
         data: { session },
@@ -32,7 +27,6 @@ export default function SignupPage() {
 
     checkUser();
 
-    // 회원가입 후 자동 로그인 시 홈으로 리다이렉트
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event) => {
@@ -48,28 +42,54 @@ export default function SignupPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-gray-600">로딩 중...</div>
+      <div className="h-full flex items-center justify-center">
+        <Loading size="large" text="로딩 중..." />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+    <div className="h-full flex items-center justify-center p-4">
+      <div className="max-w-md w-full space-y-6">
+        <div className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-white">
             찬양 콘티 관리 시스템
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-sm text-white/60">
             계정을 생성하여 콘티를 관리하세요
           </p>
         </div>
 
-        <div className="mt-8 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div className="glass-card p-6">
           <Auth
             supabaseClient={supabase}
-            appearance={{ theme: ThemeSupa }}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    brand: '#818cf8',
+                    brandAccent: '#a5b4fc',
+                    inputBackground: 'rgba(255, 255, 255, 0.08)',
+                    inputText: 'white',
+                    inputPlaceholder: 'rgba(255, 255, 255, 0.5)',
+                    inputBorder: 'rgba(255, 255, 255, 0.1)',
+                    inputBorderFocus: '#818cf8',
+                    inputBorderHover: 'rgba(255, 255, 255, 0.2)',
+                  },
+                  radii: {
+                    borderRadiusButton: '12px',
+                    inputBorderRadius: '12px',
+                  },
+                },
+              },
+              className: {
+                container: 'text-white',
+                label: 'text-white/80',
+                button: 'glass-button-primary',
+                anchor: 'text-indigo-300 hover:text-indigo-200',
+              },
+            }}
             providers={[]}
             view="sign_up"
             showLinks={true}
@@ -87,7 +107,9 @@ export default function SignupPage() {
           />
         </div>
 
-        <p className="mt-4 text-center text-sm text-gray-600">회원가입 시 자동으로 로그인됩니다.</p>
+        <p className="text-center text-sm text-white/50">
+          회원가입 시 자동으로 로그인됩니다.
+        </p>
       </div>
     </div>
   );

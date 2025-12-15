@@ -33,10 +33,8 @@ export default function NewContiPage() {
       const result = await response.json();
       const contiId = result.data.id;
 
-      // 유튜브 재생목록에서 곡 개수를 가져온 경우, 빈 곡들을 자동 생성
       if (initialSongCount && initialSongCount > 0) {
         try {
-          // 곡 개수만큼 빈 곡 생성
           for (let i = 0; i < initialSongCount; i++) {
             await fetch(`/api/conti/${contiId}/song`, {
               method: 'POST',
@@ -52,11 +50,9 @@ export default function NewContiPage() {
           }
         } catch (err) {
           console.error('초기 곡 생성 실패:', err);
-          // 곡 생성 실패는 경고만 표시하고 계속 진행
         }
       }
 
-      // Redirect to edit page with the new conti
       router.push(`/conti/${contiId}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
@@ -75,26 +71,26 @@ export default function NewContiPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-2xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">새 콘티 생성</h1>
+    <div className="h-full overflow-auto p-4 md:p-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="glass-card p-5 md:p-6">
+          <h1 className="text-xl md:text-2xl font-bold text-white mb-5">새 콘티 생성</h1>
 
           {error && (
-            <div className="mb-6">
+            <div className="mb-5">
               <ErrorMessage message={error} onRetry={() => setError(null)} />
             </div>
           )}
 
-          {/* 유튜브 재생목록 연동 (선택사항) */}
-          <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <h2 className="text-lg font-semibold text-gray-800 mb-3">
+          {/* 유튜브 재생목록 연동 */}
+          <div className="mb-5 p-4 rounded-xl bg-indigo-500/10 border border-indigo-400/30">
+            <h2 className="text-base font-semibold text-white mb-3">
               유튜브 재생목록에서 곡 목록 생성 (선택사항)
             </h2>
             <YoutubePlaylistInput onPlaylistLoaded={handlePlaylistLoaded} />
             {initialSongCount && (
-              <p className="mt-2 text-sm text-green-600 font-medium">
-                ✓ {initialSongCount}개의 곡이 생성될 예정입니다.
+              <p className="mt-3 text-sm text-emerald-400 font-medium">
+                {initialSongCount}개의 곡이 생성될 예정입니다.
               </p>
             )}
           </div>
