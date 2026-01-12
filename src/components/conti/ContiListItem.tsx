@@ -39,15 +39,17 @@ export default function ContiListItemComponent({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow hover:shadow-md transition-shadow p-6 border border-gray-200">
-      <div className="flex items-start justify-between">
-        <div className="flex-1 min-w-0">
-          {/* Title */}
-          <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">{conti.title}</h3>
+    <div className="glass-card rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full flex flex-col">
+      <div className="flex-1">
+        {/* Title */}
+        <h3 className="text-lg font-bold text-gray-900 mb-3 truncate group-hover:text-indigo-600 transition-colors">
+          {conti.title}
+        </h3>
 
-          {/* Worship Date */}
-          <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Worship Date */}
+        <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+          <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
+            <svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Calendar</title>
               <path
                 strokeLinecap="round"
@@ -56,12 +58,14 @@ export default function ContiListItemComponent({
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <span>{formatDate(conti.worship_date)}</span>
           </div>
+          <span className="font-medium">{formatDate(conti.worship_date)}</span>
+        </div>
 
-          {/* Song Count */}
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Song Count */}
+        <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+          <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+            <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Music</title>
               <path
                 strokeLinecap="round"
@@ -70,31 +74,48 @@ export default function ContiListItemComponent({
                 d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
               />
             </svg>
-            <span>곡 {conti.song_count}개</span>
           </div>
-
-          {/* Notes Preview */}
-          {conti.notes && <p className="mt-3 text-sm text-gray-600 line-clamp-2">{conti.notes}</p>}
+          <span>곡 {conti.song_count}개</span>
         </div>
 
-        {/* Actions */}
-        <div className="flex flex-col gap-2 ml-4">
-          <Button variant="primary" onClick={handleEdit} disabled={isDeleting}>
-            편집
+        {/* Notes Preview */}
+        {conti.notes && (
+          <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">{conti.notes}</p>
+        )}
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2 mt-4 pt-4 border-t border-gray-100/50">
+        <Button variant="primary" size="small" onClick={handleEdit} disabled={isDeleting} className="flex-1">
+          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+            />
+          </svg>
+          편집
+        </Button>
+        {onDelete && (
+          <Button variant="danger" size="small" onClick={handleDelete} isLoading={isDeleting}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
           </Button>
-          {onDelete && (
-            <Button variant="danger" onClick={handleDelete} isLoading={isDeleting}>
-              삭제
-            </Button>
-          )}
-        </div>
+        )}
       </div>
 
       {/* Metadata */}
-      <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
-        <span>생성일: {new Date(conti.created_at).toLocaleDateString('ko-KR')}</span>
+      <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
+        <span>{new Date(conti.created_at).toLocaleDateString('ko-KR')}</span>
         {conti.updated_at !== conti.created_at && (
-          <span>수정일: {new Date(conti.updated_at).toLocaleDateString('ko-KR')}</span>
+          <span className="text-indigo-400">수정됨</span>
         )}
       </div>
     </div>

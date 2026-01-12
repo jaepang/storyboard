@@ -41,7 +41,7 @@ export default function SearchBar({ onSearch, isLoading = false }: SearchBarProp
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-5 fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Search Input */}
         <div className="lg:col-span-2">
@@ -79,9 +79,9 @@ export default function SearchBar({ onSearch, isLoading = false }: SearchBarProp
       </div>
 
       {/* Sort & Actions */}
-      <div className="flex flex-wrap gap-4 items-end">
-        <div className="flex-1 min-w-[200px]">
-          <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
+      <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-end mt-4">
+        <div className="flex-1 min-w-0 sm:max-w-[250px]">
+          <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-2">
             정렬
           </label>
           <select
@@ -89,7 +89,7 @@ export default function SearchBar({ onSearch, isLoading = false }: SearchBarProp
             value={sort}
             onChange={(e) => setSort(e.target.value as typeof sort)}
             disabled={isLoading}
-            className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-base transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="block w-full rounded-xl px-4 py-3 text-base transition-all duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed glass-input focus:ring-2 focus:ring-indigo-500/20"
           >
             <option value="worship_date_desc">예배 날짜 (최신순)</option>
             <option value="worship_date_asc">예배 날짜 (오래된순)</option>
@@ -98,11 +98,27 @@ export default function SearchBar({ onSearch, isLoading = false }: SearchBarProp
           </select>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-3 sm:ml-auto">
           <Button type="button" variant="secondary" onClick={handleReset} disabled={isLoading}>
+            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
             초기화
           </Button>
           <Button type="submit" variant="primary" isLoading={isLoading}>
+            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
             검색
           </Button>
         </div>

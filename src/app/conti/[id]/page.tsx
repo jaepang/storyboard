@@ -289,15 +289,15 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loading size="large" text="콘티 불러오는 중..." />
+      <div className="flex-1 flex items-center justify-center py-12">
+        <Loading size="large" text="콘티 불러오는 중..." light />
       </div>
     );
   }
 
   if (error && !conti) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="flex-1 flex items-center justify-center p-4">
         <div className="max-w-md w-full">
           <ErrorMessage title="콘티 조회 실패" message={error} onRetry={fetchConti} />
         </div>
@@ -310,18 +310,25 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 space-y-6">
+    <div className="flex-1 py-6 lg:py-8 overflow-y-auto">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         {/* Error Display */}
-        {error && <ErrorMessage message={error} onRetry={() => setError(null)} />}
+        {error && (
+          <div className="fade-in">
+            <ErrorMessage message={error} onRetry={() => setError(null)} />
+          </div>
+        )}
 
         {/* Conti Info Section */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center justify-between mb-6">
+        <div className="glass-card rounded-2xl p-6 fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <h1 className="text-2xl font-bold text-gray-900">콘티 편집</h1>
             <div className="flex gap-2">
               <PdfDownloadButton contiId={conti.id} contiTitle={conti.title} />
-              <Button variant="secondary" onClick={() => router.back()}>
+              <Button variant="secondary" size="small" onClick={() => router.back()}>
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
                 뒤로
               </Button>
             </div>
@@ -334,22 +341,33 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
         <ContiPreview contiId={conti.id} />
 
         {/* Songs Section */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center justify-between mb-6">
+        <div className="glass-card rounded-2xl p-6 fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <h2 className="text-xl font-bold text-gray-900">곡 목록</h2>
             <Button
               variant="primary"
+              size="small"
               onClick={() => setIsAddingSong(true)}
               disabled={isAddingSong || !!editingSong}
             >
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
               곡 추가
             </Button>
           </div>
 
           {/* Add Song Form */}
           {isAddingSong && (
-            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <h3 className="font-semibold mb-4">새 곡 추가</h3>
+            <div className="mb-6 p-5 glass rounded-xl slide-up">
+              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                </div>
+                새 곡 추가
+              </h3>
               <SongForm
                 onSubmit={handleAddSong}
                 onCancel={() => setIsAddingSong(false)}
@@ -360,8 +378,15 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
 
           {/* Edit Song Form */}
           {editingSong && (
-            <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold mb-4">곡 수정</h3>
+            <div className="mb-6 p-5 glass rounded-xl border-l-4 border-indigo-500 slide-up">
+              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </div>
+                곡 수정
+              </h3>
               <SongForm
                 initialData={editingSong}
                 onSubmit={handleEditSong}
@@ -385,8 +410,13 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
 
         {/* Sheet Music Upload Section */}
         {uploadingSong && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
+          <div className="glass-card rounded-2xl p-6 slide-up">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
               악보 업로드: {uploadingSong.title}
             </h2>
             <SheetMusicUploader
@@ -406,8 +436,13 @@ export default function EditContiPage({ params }: { params: Promise<{ id: string
 
         {/* Sheet Music Editor Section */}
         {editingSheetMusic?.sheet_music_url && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
+          <div className="glass-card rounded-2xl p-6 slide-up">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </div>
               악보 편집: {editingSheetMusic.title}
             </h2>
             <SheetMusicEditor
